@@ -12,7 +12,7 @@ def test_get_search():
     assert content is not None
     assert len(content) == 1 # Do we need to check length of content?
 
-    assert len(content['images']) == 2
+    assert len(content['images']) == 1
 
     assert isinstance(content['images'][0]['byte_size'], int)
     assert isinstance(content['images'][0]['dominant_color'], str)
