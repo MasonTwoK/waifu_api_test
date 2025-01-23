@@ -31,6 +31,5 @@ def test_get_search():
     assert isinstance(content['images'][0]['url'], str)
     assert isinstance(content['images'][0]['preview_url'], str)
 
-    print()
 
 
