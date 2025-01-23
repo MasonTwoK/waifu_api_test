@@ -3,9 +3,14 @@
 import pytest
 import requests
 
+def test_get_search_random():
+    auth_token = 'Bearer 8E0O1m-_ebI8TAHe_xlemUmSCvDp0_Ey9sr4TewWq4a1lc_uDf6hr2A-d-oaCXq5_Ta1QPTGZnAMiZZ_nbyjy4zUwY8UVu2cCsGxxaVNEEKEPGB-gPEL7rYhXpy3WDMiZpwyJ36Kdhe8IaLwCqTV8ahTnOx9ArWgezVjIkqRFj0'
 
-def test_get_search():
-    response = requests.get(url="https://api.waifu.im/search")
+    headers = {
+        'Authorization': auth_token
+    }
+
+    response = requests.get(url="https://api.waifu.im/search", headers=headers)
     assert response.status_code == 200
 
     content = response.json()
@@ -32,4 +37,16 @@ def test_get_search():
     assert isinstance(content['images'][0]['preview_url'], str)
 
 
+@pytest.mark.skip(reason="TBD")
+def test_get_search_single_tag_included():
+    response = requests.get(url="https://api.waifu.im/search/?included_tags=maid")
+    result = response.json()
 
+    # need a loop to add for searching of type: 'name':'maid' in result['images'][0]['tags']
+    # assert result['images'][0]['tags']
+
+
+@pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
+def test_get_search_random_without_header():
+    response = requests.get(url="https://api.waifu.im/search")
+    assert response.status_code == 401
