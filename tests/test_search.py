@@ -40,6 +40,7 @@ def test_get_search_single_tag_included():
     response = requests.get(url="https://api.waifu.im/search/?included_tags=maid")
     result = response.json()
 
+
     # need a loop to add for searching of type: 'name':'maid' in result['images'][0]['tags']
     # assert result['images'][0]['tags']
 
