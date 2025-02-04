@@ -1,14 +1,17 @@
 # Tests for page - https://docs.waifu.im/reference/api-reference/search
+from http.client import responses
 
 import pytest
 import requests
 
+url="https://api.waifu.im/search"
+auth_token = 'Bearer 8E0O1m-_ebI8TAHe_xlemUmSCvDp0_Ey9sr4TewWq4a1lc_uDf6hr2A-d-oaCXq5_Ta1QPTGZnAMiZZ_nbyjy4zUwY8UVu2cCsGxxaVNEEKEPGB-gPEL7rYhXpy3WDMiZpwyJ36Kdhe8IaLwCqTV8ahTnOx9ArWgezVjIkqRFj0'
+
 def test_get_search_random():
-    auth_token = 'Bearer 8E0O1m-_ebI8TAHe_xlemUmSCvDp0_Ey9sr4TewWq4a1lc_uDf6hr2A-d-oaCXq5_Ta1QPTGZnAMiZZ_nbyjy4zUwY8UVu2cCsGxxaVNEEKEPGB-gPEL7rYhXpy3WDMiZpwyJ36Kdhe8IaLwCqTV8ahTnOx9ArWgezVjIkqRFj0'
 
     headers = {'Authorization': auth_token}
 
-    response = requests.get(url="https://api.waifu.im/search", headers=headers)
+    response = requests.get(url=url, headers=headers)
     assert response.status_code == 200
 
     content = response.json()
@@ -33,6 +36,17 @@ def test_get_search_random():
     assert isinstance(content['images'][0]['byte_size'], int)
     assert isinstance(content['images'][0]['url'], str)
     assert isinstance(content['images'][0]['preview_url'], str)
+
+
+def test_search_is_nsfw_false_by_default():
+    headers = {'Authorization': auth_token}
+
+    for test in range(5):
+        response = requests.get(url=url, headers=headers)
+        assert response.status_code == 200
+
+        content = response.json()
+        assert content['images'][0]['is_nsfw'] == False
 
 
 @pytest.mark.skip(reason="TBD")
