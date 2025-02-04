@@ -3,9 +3,21 @@ from http.client import responses
 
 import pytest
 import requests
+import random
 
 url="https://api.waifu.im/search"
 auth_token = 'Bearer 8E0O1m-_ebI8TAHe_xlemUmSCvDp0_Ey9sr4TewWq4a1lc_uDf6hr2A-d-oaCXq5_Ta1QPTGZnAMiZZ_nbyjy4zUwY8UVu2cCsGxxaVNEEKEPGB-gPEL7rYhXpy3WDMiZpwyJ36Kdhe8IaLwCqTV8ahTnOx9ArWgezVjIkqRFj0'
+
+def tag_randomizer():
+    list_of_tags = []
+
+    response = requests.get(url='https://api.waifu.im/tags')
+    content = response.json()
+
+    for i in range(len(list(content))):
+        list_of_tags += list(content.values())[i]  # Is there something wrong about it https://www.geeksforgeeks.org/python-select-random-value-from-a-list/?
+
+    return random.choice(list_of_tags)
 
 def test_get_search_random():
 
