@@ -19,6 +19,14 @@ def tag_randomizer():
 
     return random.choice(list_of_tags)
 
+
+def tags_comparer(tag, content):
+    for element in content['images'][0]['tags']:
+        if element['name'] == tag:
+            return True
+    return False
+
+
 def test_get_search_random():
 
     headers = {'Authorization': auth_token}
@@ -61,13 +69,12 @@ def test_search_is_nsfw_false_by_default():
         assert content['images'][0]['is_nsfw'] == False
 
 
-@pytest.mark.skip(reason="TBD")
 def test_get_search_single_tag_included():
-    response = requests.get(url="https://api.waifu.im/search/?included_tags=maid")
-    result = response.json()
+    random_tag = tag_randomizer()
+    response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag}")
+    content = response.json()
 
-    # need a loop to add for searching of type: 'name':'maid' in result['images'][0]['tags']
-    # assert result['images'][0]['tags']
+    assert tags_comparer(random_tag, content), 'Tags are not equal.'
 
 
 @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
