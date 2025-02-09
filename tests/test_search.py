@@ -86,6 +86,7 @@ class TestCasesPositive:
         assert tags_comparer(random_tag_1, content)
         assert tags_comparer(random_tag_2, content)
 
+
 class TestCasesNegative:
     @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
     def test_get_search_random_without_header(self):
