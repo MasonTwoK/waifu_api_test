@@ -71,7 +71,9 @@ def test_search_is_nsfw_false_by_default():
 
 def test_get_search_single_tag_included():
     random_tag = tag_randomizer()
-    response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag}")
+
+    headers = {'Authorization': auth_token}
+    response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag}", headers=headers)
     content = response.json()
 
     assert tags_comparer(random_tag, content), 'Tags are not equal.'
@@ -81,6 +83,7 @@ def test_get_search_single_tag_included():
 def test_get_search_multiple_tag_included():
     random_tag_1 = tag_randomizer()
     random_tag_2 = tag_randomizer()
+
     response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag_1}&{random_tag_2}")
     content = response.json()
 
@@ -88,16 +91,15 @@ def test_get_search_multiple_tag_included():
     assert tags_comparer(random_tag_2, content)
 
 
-@pytest.mark.skip(reson="BUG #4: Get search returns random tag while to similar included tags requested added")
+@pytest.mark.skip(reason="BUG #4: Get search returns random tag while to similar included tags requested added")
 def test_get_search_same_multiple_tag_included():
     random_tag = tag_randomizer()
+
     response = requests.get(url=f"https://api.waifu.im/search/?{random_tag}&{random_tag}")
     content = response.json()
 
     assert response.status_code == 200, 'Wrong status code returned.'
     assert tags_comparer(tag=random_tag, content=content)
-
-
 
 
 @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
