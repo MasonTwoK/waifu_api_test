@@ -1,4 +1,5 @@
 # Tests for page - https://docs.waifu.im/reference/api-reference/search
+from http.client import responses
 
 import pytest
 import requests
@@ -74,6 +75,22 @@ def test_get_search_single_tag_included():
     content = response.json()
 
     assert tags_comparer(random_tag, content), 'Tags are not equal.'
+
+
+@pytest.mark.skip(reason="BUG #3: Get search do not return picture with multiple searched tags. Repro rate 50%")
+def test_get_search_multiple_tag_included():
+    random_tag_1 = tag_randomizer()
+    random_tag_2 = tag_randomizer()
+    response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag_1}&{random_tag_2}")
+    content = response.json()
+
+    assert tags_comparer(random_tag_1, content)
+    assert tags_comparer(random_tag_2, content)
+
+
+@pytest.mark.skip(reason="TBD")
+def test_get_search_same_multiple_tag_included():
+    pass
 
 
 @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
