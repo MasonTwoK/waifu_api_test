@@ -1,5 +1,4 @@
 # Tests for page - https://docs.waifu.im/reference/api-reference/search
-from http.client import responses
 
 import pytest
 import requests
