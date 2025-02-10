@@ -71,9 +71,10 @@ class TestCasesPositive:
 
         headers = {'Authorization': auth_token}
         response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag}", headers=headers)
-        content = response.json()
+        assert response.status_code == 200
 
-        assert tags_comparer(tag=random_tag, content=content), 'Tags are not equal.'
+        content = response.json()
+        assert tags_comparer(tag=random_tag, content=content), 'Included tag is not present.'
 
     @pytest.mark.skip(reason="BUG #3: Get search does not return picture with multiple searched tags. Repro rate 50%")
     def test_get_search_multiple_tag_included(self):
@@ -86,13 +87,23 @@ class TestCasesPositive:
         assert tags_comparer(random_tag_1, content)
         assert tags_comparer(random_tag_2, content)
 
+    def test_get_search_single_tag_excluded(self):
+        random_tag = tag_randomizer()
+
+        headers = {'Authorization': auth_token}
+        response = requests.get(url=f'https://api.waifu.im/search/?{random_tag}', headers=headers)
+        assert response.status_code == 200, 'Wrong status code'
+
+        content = response.json()
+
+        assert not tags_comparer(tag=random_tag, content=content), 'Image returned with excluded tag.'
+
 
 class TestCasesNegative:
     @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
     def test_get_search_random_without_header(self):
         response = requests.get(url="https://api.waifu.im/search")
         assert response.status_code == 401
-
 
     @pytest.mark.skip(reason="BUG #4: Get search returns random tag while to similar included tags requested added")
     def test_get_search_same_multiple_tag_included(self):
