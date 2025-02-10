@@ -82,8 +82,9 @@ class TestCasesPositive:
         random_tag_2 = tag_randomizer()
 
         response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag_1}&{random_tag_2}")
-        content = response.json()
+        assert response.status_code == 200, 'Wrong status code'
 
+        content = response.json()
         assert tags_comparer(random_tag_1, content)
         assert tags_comparer(random_tag_2, content)
 
@@ -95,7 +96,6 @@ class TestCasesPositive:
         assert response.status_code == 200, 'Wrong status code'
 
         content = response.json()
-
         assert not tags_comparer(tag=random_tag, content=content), 'Image returned with excluded tag.'
 
 
@@ -110,7 +110,7 @@ class TestCasesNegative:
         random_tag = tag_randomizer()
 
         response = requests.get(url=f"https://api.waifu.im/search/?{random_tag}&{random_tag}")
-        content = response.json()
-
         assert response.status_code == 200, 'Wrong status code returned.'
+
+        content = response.json()
         assert tags_comparer(tag=random_tag, content=content)
