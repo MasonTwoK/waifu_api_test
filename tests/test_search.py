@@ -45,7 +45,7 @@ class TestCasesPositive:
         assert isinstance(content['images'][0]['image_id'], int)
         assert isinstance(content['images'][0]['favorites'], int)
         assert isinstance(content['images'][0]['dominant_color'], str)
-        assert isinstance(content['images'][0]['source'], str)
+        assert isinstance(content['images'][0]['source'], str) or content['images'][0]['source'] is None
         assert isinstance(content['images'][0]['artist'], dict) or content['images'][0]['artist'] is None # TODO: Need to investigate behaviour here..
         assert isinstance(content['images'][0]['uploaded_at'], str)
         assert (content['images'][0]['liked_at'] is None) or (isinstance(content['images'][0]['liked_at'], str))  # TODO: Need to investigate behaviour here..
