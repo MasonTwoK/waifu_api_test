@@ -98,6 +98,18 @@ class TestCasesPositive:
         content = response.json()
         assert not tags_comparer(tag=random_tag, content=content), 'Image returned with excluded tag.'
 
+    def test_get_search_multiple_tag_excluded(self):
+        random_tag_1 = tag_randomizer()
+        random_tag_2 = tag_randomizer()
+
+        header = {'Authorization': auth_token}
+
+        response = requests.get(url=f"{url}/?excluded_tags={random_tag_1}&{random_tag_2}", headers=header)
+        assert response.status_code == 200
+
+        content = response.json()
+        assert not tags_comparer(tag=random_tag_1, content=content), f'Excluded tag - {random_tag_1} is present'
+        assert not tags_comparer(tag=random_tag_2, content=content), f'Excluded tag - {random_tag_2} is present'
 
 class TestCasesNegative:
     @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
