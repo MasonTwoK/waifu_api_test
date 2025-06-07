@@ -4,8 +4,9 @@ import pytest
 import requests
 import random
 
-url="https://api.waifu.im/search"
-auth_token = 'Bearer 8E0O1m-_ebI8TAHe_xlemUmSCvDp0_Ey9sr4TewWq4a1lc_uDf6hr2A-d-oaCXq5_Ta1QPTGZnAMiZZ_nbyjy4zUwY8UVu2cCsGxxaVNEEKEPGB-gPEL7rYhXpy3WDMiZpwyJ36Kdhe8IaLwCqTV8ahTnOx9ArWgezVjIkqRFj0'
+url = "https://api.waifu.im/search"
+# auth_token =  # How to get a token https://docs.waifu.im/authorization
+
 
 def tag_randomizer():
     list_of_tags = []
