@@ -5,8 +5,9 @@ import requests
 
 
 def test_get_authorization():
-    discord_id: int = 608317829128912907
-    params = {'user_id': discord_id, 'permissions':['view_favorites']}
+    # How to use ID: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID
+    # discord_id:
+    params = {'user_id': discord_id, 'permissions': ['view_favorites']}
     response = requests.get(url="https://www.waifu.im/authorization", params=params)
 
     assert response.status_code == 200
