@@ -17,8 +17,8 @@ def tag_randomizer():
     content = response.json()
 
     for i in range(len(list(content))):
-        list_of_tags += list(content.values())[
-            i]  # Is there something wrong about it https://www.geeksforgeeks.org/python-select-random-value-from-a-list/?
+        list_of_tags += list(content.values())[i]
+        # Is there something wrong about it https://www.geeksforgeeks.org/python-select-random-value-from-a-list/ ?
 
     return random.choice(list_of_tags)
 
