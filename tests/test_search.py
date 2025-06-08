@@ -2,10 +2,12 @@
 
 import pytest
 import requests
+import os
 import random
 
+
 url = "https://api.waifu.im/search"
-# auth_token =  # How to get a token https://docs.waifu.im/authorization
+auth_token = os.environ['auth_token']  # How to get a token https://docs.waifu.im/authorization
 
 
 def tag_randomizer():
@@ -20,11 +22,13 @@ def tag_randomizer():
 
     return random.choice(list_of_tags)
 
+
 def tags_comparer(tag, content):
     for element in content['images'][0]['tags']:
         if element['name'] == tag:
             return True
     return False
+
 
 class TestCasesPositive:
     def test_get_search_random(self):
@@ -36,7 +40,7 @@ class TestCasesPositive:
 
         content = response.json()
         assert content is not None
-        assert len(content) == 1 # Do we need to check length of content?
+        assert len(content) == 1  # Do we need to check length of content?
 
         assert len(content['images']) == 1
         assert len(content['images'][0]) == 16
@@ -111,6 +115,7 @@ class TestCasesPositive:
         content = response.json()
         assert not tags_comparer(tag=random_tag_1, content=content), f'Excluded tag - {random_tag_1} is present'
         assert not tags_comparer(tag=random_tag_2, content=content), f'Excluded tag - {random_tag_2} is present'
+
 
 class TestCasesNegative:
     @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")

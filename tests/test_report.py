@@ -2,11 +2,12 @@
 
 import pytest
 import requests
+import os
 
 
 @pytest.mark.skip(reason="BUG #1: Error 400. User is enable to create a report")
 def test_post_report():
-    # auth_token =  # How to get a token https://docs.waifu.im/authorization
+    auth_token = os.environ.get('auth_token')  # How to get a token https://docs.waifu.im/authorization
     headers = {
         'Accept-Version': 'v5',
         'Authorization': auth_token,

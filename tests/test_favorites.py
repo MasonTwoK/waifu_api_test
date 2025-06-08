@@ -2,12 +2,13 @@
 
 import pytest
 import requests
+import os
 
 
 @pytest.mark.skip(reason="TBD. Q: How to put Bearer Token to requests.get()")
 def test_get_favorites():
-    # auth_token =  # How to get a token https://docs.waifu.im/authorization
 
+    auth_token = os.environ.get('auth_token')  # How to get a token https://docs.waifu.im/authorization
     headers = {
         'Accept-Version': 'v5',
         'Authorization': auth_token
