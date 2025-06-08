@@ -1,0 +1,5 @@
+# created by virtualenv automatically
+.venv/
+.idea/
+*misc.xml
+*waifu_api_tests.iml
