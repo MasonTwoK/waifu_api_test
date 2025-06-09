@@ -67,7 +67,6 @@ def test_get_tags_full_info_false():
     assert data['nsfw'] is not None, 'NSFW (lewd) tag group is missing'
 
     assert tag_contains('maid', data['versatile']), 'maid tag is not present in versatile group'
-    assert 'maid' in data['versatile'], 'maid tag is not present in versatile group'
     assert tag_contains('waifu', data['versatile']), 'waifu tag is not present in versatile group'
     assert tag_contains('marin-kitagawa', data['versatile']), 'marin-kitagawa tag is not present'
     assert tag_contains('mori-calliope', data['versatile']), 'mori-calliope tag is not present'
@@ -104,5 +103,49 @@ def test_get_tags_full_info_true():
     assert tag_full_info['is_nsfw'] is True
     assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
 
-    assert len(data['nsfw']) == 7, 'Amount of nsfw group tags is 7'
+    assert tag_full_info_provider('ecchi', data['nsfw']) is not None, 'ecchi tag does not have full info'
+    tag_full_info = tag_full_info_provider('ecchi', data['nsfw'])
+    assert tag_full_info['tag_id'] == 2
+    assert tag_full_info[
+               'description'] == ("Slightly explicit sexual content. Show full to partial nudity. "
+                                  "Doesn't show any genital.")
+    assert tag_full_info['is_nsfw'] is True
+    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
 
+    assert tag_full_info_provider('ero', data['nsfw']) is not None, 'ero tag does not have full info'
+    tag_full_info = tag_full_info_provider('ero', data['nsfw'])
+    assert tag_full_info['tag_id'] == 3
+    assert tag_full_info['description'] == "Any kind of erotic content, basically any nsfw image."
+    assert tag_full_info['is_nsfw'] is True
+    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
+
+    assert tag_full_info_provider('hentai', data['nsfw']) is not None, 'hentai tag does not have full info'
+    tag_full_info = tag_full_info_provider('hentai', data['nsfw'])
+    assert tag_full_info['tag_id'] == 4
+    assert tag_full_info['description'] == "Explicit sexual content."
+    assert tag_full_info['is_nsfw'] is True
+    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
+
+    assert tag_full_info_provider('milf', data['nsfw']) is not None, 'hentai tag does not have full info'
+    tag_full_info = tag_full_info_provider('milf', data['nsfw'])
+    assert tag_full_info['tag_id'] == 6
+    assert tag_full_info['description'] == "A sexually attractive middle-aged woman."
+    assert tag_full_info['is_nsfw'] is True
+    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
+
+    assert tag_full_info_provider('oral', data['nsfw']) is not None, 'oral tag does not have full info'
+    tag_full_info = tag_full_info_provider('oral', data['nsfw'])
+    assert tag_full_info['tag_id'] == 8
+    assert tag_full_info['description'] == "Oral sex content."
+    assert tag_full_info['is_nsfw'] is True
+    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
+
+    assert tag_full_info_provider('paizuri', data['nsfw']) is not None, 'paizuri tag does not have full info'
+    tag_full_info = tag_full_info_provider('paizuri', data['nsfw'])
+    assert tag_full_info['tag_id'] == 9
+    assert tag_full_info['description'] == ("A subcategory of hentai that involves breast sex, "
+                                            "also known as titty fucking.")
+    assert tag_full_info['is_nsfw'] is True
+    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
+
+    assert len(data['nsfw']) == 7, 'Amount of nsfw group tags is 7'
