@@ -16,4 +16,5 @@ def test_get_favorites():
 
     response = requests.get(url="https://api.waifu.im/fav", headers=headers)
     assert response.status_code == 404
+    assert 'No image found matching the criteria given' in response.text
     print()
