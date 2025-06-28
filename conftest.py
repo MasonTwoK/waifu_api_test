@@ -12,4 +12,3 @@ def request_get_tags_status_code():
 def request_get_tags_response_data():
     response = requests.get(url="https://api.waifu.im/tags")
     yield response.json()
-
