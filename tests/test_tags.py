@@ -25,6 +25,33 @@ def tag_full_info_provider(tag_name, tags_group_list):
     return None
 
 
+@pytest.mark.tags
+class TestGetTags:
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_status_code(self):
+        response = requests.get(url="https://api.waifu.im/tags")
+        assert response.status_code == 200
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_groups_amount(self):
+        response = requests.get(url="https://api.waifu.im/tags")
+
+        data = response.json()
+        assert len(data) == 2, 'Tags group amount is wrong'
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_groups_versatile(self):
+        response = requests.get(url="https://api.waifu.im/tags")
+
+        data = response.json()
+        assert data['versatile'] is not None, 'Versatile tag group is missing'
+
+
+@pytest.mark.tags
 def test_get_tags():
     response = requests.get(url="https://api.waifu.im/tags")
     assert response.status_code == 200
@@ -36,7 +63,7 @@ def test_get_tags():
 
     assert tag_contains('maid', data['versatile']), 'maid tag is not present in versatile group'
     assert 'maid' in data['versatile'], 'maid tag is not present in versatile group'  # Яка різниця з попереднім рядком?
-    # assert ['maid', 'oppai'] in data['versatile'], 'maid & oppai tags are not present in versatile group'  # Чому так воно видає помилку? Проблема порядку?
+    # assert ['maid', 'oppai'] in data['versatile'], 'maid & oppai tags are not present in versatile group'  # Чому так, воно видає помилку? Проблема порядку?
     assert tag_contains('waifu', data['versatile']), 'waifu tag is not present in versatile group'
     assert tag_contains('marin-kitagawa', data['versatile']), 'marin-kitagawa tag is not present'
     assert tag_contains('mori-calliope', data['versatile']), 'mori-calliope tag is not present'
