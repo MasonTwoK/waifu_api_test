@@ -31,138 +31,148 @@ class TestGetTags:
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_get_tags_status_code(self, request_get_tags_status_code):
-        assert request_get_tags_status_code == 200
+    def test_get_tags_status_code(self, request_get_tags_response):
+        assert request_get_tags_response.status_code == 200
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_groups_amount(self, request_get_tags_response_data):
-        assert len(request_get_tags_response_data) == 2, 'Tags group amount is wrong'
+    def test_get_tags_groups_amount(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert len(data) == 2, 'Tags group amount is wrong'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_in_group_versatile(self, request_get_tags_response_data):
-        assert 'versatile' in request_get_tags_response_data, 'Versatile tag group is missing'
+    def test_get_tags_in_group_versatile(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'versatile' in data, 'Versatile tag group is missing'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_in_group_nsfw(self, request_get_tags_response_data):
-        assert 'nsfw' in request_get_tags_response_data, 'NSFW (lewd) tag group is missing'
+    def test_get_tags_in_group_nsfw(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'nsfw' in data, 'NSFW (lewd) tag group is missing'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_group_versatile_amount(self, request_get_tags_response_data):
-        assert len(request_get_tags_response_data['versatile']), 'Amount of versatile group tags is not 9'
+    def test_get_tags_group_versatile_amount(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert len(data['versatile']), 'Amount of versatile group tags is not 9'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_maid(self, request_get_tags_response_data):
-        assert 'maid' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_maid(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'maid' in data['versatile'], \
             'maid tag is not present in versatile group'
-        assert tag_contains('maid', request_get_tags_response_data['versatile']), \
+        assert tag_contains('maid', data['versatile']), \
             'maid tag is not present in versatile group'  # Яка різниця з попереднім рядком?
 
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.xfail(reason="Чому так, воно видає помилку? Проблема порядку?")
-    def test_get_tags_contains_maid_and_oppai(self, request_get_tags_response_data):
-        assert ['maid', 'oppai'] in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_maid_and_oppai(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert ['maid', 'oppai'] in data['versatile'], \
             'maid & oppai tags are not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_waifu(self, request_get_tags_response_data):
-        assert 'waifu' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_waifu(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'waifu' in data['versatile'], \
             'waifu tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_marin_kitagawa(self, request_get_tags_response_data):
-        assert 'marin-kitagawa' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_marin_kitagawa(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'marin-kitagawa' in data['versatile'], \
             'marin-kitagawa tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_mori_calliope(self, request_get_tags_response_data):
-        assert 'mori-calliope' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_mori_calliope(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'mori-calliope' in data['versatile'], \
             'mori-calliope tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_raiden_shogun(self, request_get_tags_response_data):
-        assert 'raiden-shogun' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_raiden_shogun(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'raiden-shogun' in data['versatile'], \
             'raiden-shogun tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_oppai(self, request_get_tags_response_data):
-        assert 'oppai' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_oppai(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'oppai' in data['versatile'], \
             'oppai tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_selfies(self, request_get_tags_response_data):
-        assert 'selfies' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_selfies(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'selfies' in data['versatile'], \
             'selfies tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_uniform(self, request_get_tags_response_data):
-        assert 'uniform' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_uniform(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'uniform' in data['versatile'], \
             'uniform tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_kamisato_ayaka(self, request_get_tags_response_data):
-        assert 'kamisato-ayaka' in request_get_tags_response_data['versatile'], \
+    def test_get_tags_contains_kamisato_ayaka(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'kamisato-ayaka' in data['versatile'], \
             'kamisato-ayaka tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_group_nsfw_amount(self, request_get_tags_response_data):
-        assert len(request_get_tags_response_data['nsfw']) == 7, 'Amount of nsfw group tags is 7'
+    def test_get_tags_group_nsfw_amount(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert len(data['nsfw']) == 7, 'Amount of nsfw group tags is 7'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_ass(self, request_get_tags_response_data):
-        assert 'ass' in request_get_tags_response_data['nsfw'], \
+    def test_get_tags_contains_ass(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'ass' in data['nsfw'], \
             'ass tag is not present in nsfw group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_ass(self, request_get_tags_response_data):
-        assert 'hentai' in request_get_tags_response_data['nsfw'], \
-            'hentai tag is not present in nsfw group'
+    def test_get_tags_contains_oral(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'oral' in data['nsfw'], 'oral tag is not present in nsfw group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_ass(self, request_get_tags_response_data):
-        assert 'oral' in request_get_tags_response_data['nsfw'], \
-            'oral tag is not present in nsfw group'
+    def test_get_tags_contains_milf(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'milf' in data['nsfw'], 'milf tag is not present in nsfw group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_ass(self, request_get_tags_response_data):
-        assert 'milf' in request_get_tags_response_data['nsfw'], \
-            'milf tag is not present in nsfw group'
+    def test_get_tags_contains_paizuri(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'paizuri' in data['nsfw'], 'paizuri tag is not present in nsfw group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_ass(self, request_get_tags_response_data):
-        assert 'paizuri' in request_get_tags_response_data['nsfw'], \
-            'paizuri tag is not present in nsfw group'
+    def test_get_tags_contains_ecchi(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'ecchi' in data['nsfw'], 'ecchi tag is not present in nsfw group'
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_contains_ass(self, request_get_tags_response_data):
-        assert 'ecchi' in request_get_tags_response_data['nsfw'], \
-            'ecchi tag is not present in nsfw group'
-
-    @pytest.mark.tags
-    @pytest.mark.positive
-    def test_get_tags_contains_ass(self, request_get_tags_response_data):
-        assert 'ero' in request_get_tags_response_data['nsfw'], \
-            'ero tag is not present in nsfw group'
+    def test_get_tags_contains_ero(self, request_get_tags_response):
+        data = request_get_tags_response.json()
+        assert 'ero' in data['nsfw'], 'ero tag is not present in nsfw group'
 
 
 def test_get_tags_full_info_false():
