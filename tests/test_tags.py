@@ -178,7 +178,7 @@ class TestGetTags:
         assert 'ero' in data['nsfw'], 'ero tag is not present in nsfw group'
 
 
-class TestGetTagsFullParameter:
+class TestGetTagsFullParameterFalse:
     @pytest.mark.tags
     @pytest.mark.positive
     def test_get_tags_query_full_false_status_code(self, request_get_tags_query_full_false_response):
@@ -214,26 +214,62 @@ class TestGetTagsFullParameter:
         data = request_get_tags_query_full_false_response.json()
         assert len(data['nsfw']) == 7, 'Amount of nsfw group tags is 7'
 
+    @pytest.mark.tags
+    @pytest.mark.positive
     def test_get_tags_query_full_false_contains_maid(self, request_get_tags_query_full_false_response):
         data = request_get_tags_query_full_false_response.json()
         assert 'maid' in data['versatile'], 'maid tag is not present in versatile group'
 
-        assert tag_contains('waifu', data['versatile']), 'waifu tag is not present in versatile group'
-        assert tag_contains('marin-kitagawa', data['versatile']), 'marin-kitagawa tag is not present'
-        assert tag_contains('mori-calliope', data['versatile']), 'mori-calliope tag is not present'
-        assert tag_contains('raiden-shogun', data['versatile']), 'raiden-shogun tag is not present'
-        assert tag_contains('oppai', data['versatile']), 'oppai tag is not present'
-        assert tag_contains('selfies', data['versatile']), 'selfies tag is not present'
-        assert tag_contains('uniform', data['versatile']), 'uniform tag is not present'
-        assert tag_contains('kamisato-ayaka', data['versatile']), 'kamisato-ayaka tag is not present'
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_false_contains_waifu(self, request_get_tags_query_full_false_response):
+        data = request_get_tags_query_full_false_response.json()
+        assert 'waifu' in data['versatile'], 'waifu tag is not present in versatile group'
 
-        assert tag_contains('ass', data['nsfw']), 'ass tag is not present in nsfw'
-        assert tag_contains('hentai', data['nsfw']), 'hentai tag is not present in nsfw'
-        assert tag_contains('milf', data['nsfw']), 'milf tag is not present in nsfw'
-        assert tag_contains('oral', data['nsfw']), 'oral tag is not present in nsfw'
-        assert tag_contains('paizuri', data['nsfw']), 'paizuri tag is not present in nsfw'
-        assert tag_contains('ecchi', data['nsfw']), 'ecchi tag is not present in nsfw'
-        assert tag_contains('ero', data['nsfw']), 'ero tag is not present in nsfw'
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_false_contains_marin_kitagawa(self, request_get_tags_query_full_false_response):
+        data = request_get_tags_query_full_false_response.json()
+        assert 'marin-kitagawa' in data['versatile'], 'marin-kitagawa tag is not present in versatile group'
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_false_contains_mori_calliope(self, request_get_tags_query_full_false_response):
+        data = request_get_tags_query_full_false_response.json()
+        assert 'mori-calliope' in data['versatile'], 'mori-calliope tag is not present in versatile group'
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_false_contains_raiden_shogun(self, request_get_tags_query_full_false_response):
+        data = request_get_tags_query_full_false_response.json()
+        assert 'raiden-shogun' in data['versatile'], 'raiden-shogun tag is not present in versatile group'
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_false_contains_selfies(self, request_get_tags_query_full_false_response):
+        data = request_get_tags_query_full_false_response.json()
+        assert 'selfies' in data['versatile'], 'selfies tag is not present in versatile group'
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_false_contains_uniform(self, request_get_tags_query_full_false_response):
+        data = request_get_tags_query_full_false_response.json()
+        assert 'uniform' in data['versatile'], 'uniform tag is not present in versatile group'
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_false_contains_kamisato_ayaka(self, request_get_tags_query_full_false_response):
+        data = request_get_tags_query_full_false_response.json()
+        assert 'kamisato-ayaka' in data['versatile'], 'kamisato-ayaka tag is not present in versatile group'
+
+    nsfw_tags = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero']
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    @pytest.mark.parametrize("nsfw_tag", nsfw_tags)
+    def test_get_tags_query_full_false_contains_in_nsfw(self, request_get_tags_query_full_false_response, nsfw_tag):
+        data = request_get_tags_query_full_false_response.json()
+        assert nsfw_tag in data['nsfw'], f'{nsfw_tag} tag is not present in nsfw'
 
     def test_get_tags_full_info_true(self):
         response = requests.get(url='https://api.waifu.im/tags?full=true')
