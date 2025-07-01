@@ -13,7 +13,7 @@ class TestGetTags:
     @pytest.mark.positive
     @pytest.mark.status_code
     def test_get_tags_status_code(self, request_get_tags_response):
-        assert request_get_tags_response.status_code == 200
+        assert request_get_tags_response.status_code == 200, "Status code is not 200"
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -160,7 +160,7 @@ class TestGetTagsFullParameterFalse:
     @pytest.mark.tags
     @pytest.mark.positive
     def test_get_tags_query_full_false_status_code(self, request_get_tags_query_full_false_response):
-        assert request_get_tags_query_full_false_response.status_code == 200
+        assert request_get_tags_query_full_false_response.status_code == 200, "Status code is not 200"
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -251,7 +251,7 @@ class TestGetTagsFullParameterFalse:
 
     def test_get_tags_full_info_true(self):
         response = requests.get(url='https://api.waifu.im/tags?full=true')
-        assert response.status_code == 200
+        assert response.status_code == 200, "Status code is not 200"
 
         data = response.json()
         assert len(data) == 2, 'Tags group amount is wrong'
