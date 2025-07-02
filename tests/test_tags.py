@@ -2,8 +2,8 @@
 
 import pytest
 import requests
-from methods import tag_full_info_provider
 
+from methods import tag_full_info_provider
 from conftest import request_get_tags_query_full_false_response
 
 
@@ -23,17 +23,14 @@ class TestGetTags:
         status_code, data = request_get_tags_response
         assert len(data) == 2, 'Tags group amount is wrong'
 
-    @pytest.mark.tags
-    @pytest.mark.positive
-    def test_get_tags_group_versatile_presence(self, request_get_tags_response):
-        data = request_get_tags_response.json()
-        assert 'versatile' in data, 'Versatile tag group is missing'
+    tags_groups = ['versatile', 'nsfw']
 
     @pytest.mark.tags
     @pytest.mark.positive
-    def test_get_tags_group_nsfw_presence(self, request_get_tags_response):
-        data = request_get_tags_response.json()
-        assert 'nsfw' in data, 'NSFW (lewd) tag group is missing'
+    @pytest.mark.parametrize("group_name", tags_groups)
+    def test_get_tags_groups_presence(self, request_get_tags_response, group_name):
+        status_code, data = request_get_tags_response
+        assert group_name in data, f'{group_name} tags group is missing'
 
     @pytest.mark.tags
     @pytest.mark.positive
