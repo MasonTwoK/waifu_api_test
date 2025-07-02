@@ -2,6 +2,7 @@
 
 import pytest
 import requests
+from methods import tag_full_info_provider
 
 from conftest import request_get_tags_query_full_false_response
 
@@ -13,12 +14,13 @@ class TestGetTags:
     @pytest.mark.positive
     @pytest.mark.status_code
     def test_get_tags_status_code(self, request_get_tags_response):
-        assert request_get_tags_response.status_code == 200, "Status code is not 200"
+        status_code, data = request_get_tags_response
+        assert status_code == 200, "Status code is not 200"
 
     @pytest.mark.tags
     @pytest.mark.positive
     def test_get_tags_groups_amount(self, request_get_tags_response):
-        data = request_get_tags_response.json()
+        status_code, data = request_get_tags_response
         assert len(data) == 2, 'Tags group amount is wrong'
 
     @pytest.mark.tags
@@ -246,7 +248,7 @@ class TestGetTagsFullParameterFalse:
     @pytest.mark.positive
     @pytest.mark.parametrize("nsfw_tag", nsfw_tags)
     def test_get_tags_query_full_false_contains_in_nsfw(self, request_get_tags_query_full_false_response, nsfw_tag):
-        data = request_get_tags_query_full_false_response.json()
+        status_code, data = request_get_tags_query_full_false_response
         assert nsfw_tag in data['nsfw'], f'{nsfw_tag} tag is not present in nsfw'
 
     def test_get_tags_full_info_true(self):
