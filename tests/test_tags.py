@@ -110,20 +110,26 @@ class TestGetTagsFullInfoFalse:
 
 
 class TestGetTagsFullInfoTrue:
+    tags_groups = ['versatile', 'nsfw']
 
     @pytest.mark.tags
     @pytest.mark.positive
     def test_get_tags_query_full_true_status_code(self, request_get_tags_query_full_true_response):
         assert request_get_tags_query_full_true_response.status_code == 200
 
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_true_groups_amount(self, request_get_tags_query_full_true_response):
+        assert len(request_get_tags_query_full_true_response.data) == 2, 'Tags group amount is wrong'
 
-def test_get_tags_full(self):
+    @pytest.mark.parametrize("group_name", tags_groups)
+    def test_get_tags_query_full_true_groups_presence(self, request_get_tags_query_full_true_response, group_name):
+        assert group_name in request_get_tags_query_full_true_response.data, f'{group_name} is not present'
+
+
+def test_get_tags_full():
     response = requests.get(url='https://api.waifu.im/tags?full=true')
-
     data = response.json()
-    assert len(data) == 2, 'Tags group amount is wrong'
-    assert data['nsfw'] is not None
-    assert data['versatile'] is not None
 
     assert tag_full_info_provider('ass', data['nsfw']) is not None, 'ass tag does not have full info'
     tag_full_info = tag_full_info_provider('ass', data['nsfw'])
