@@ -3,11 +3,13 @@ import requests
 
 
 @pytest.fixture(scope="class")
-def request_get_tags_response():
+def request_get_tags_response(request):
     response = requests.get(url="https://api.waifu.im/tags")
-    data = response.json()
 
-    yield response.status_code, data
+    request.status_code = response.status_code
+    request.data = response.json()
+
+    yield request
 
 
 @pytest.fixture(scope="class")

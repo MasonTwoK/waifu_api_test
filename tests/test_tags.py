@@ -3,7 +3,7 @@
 import pytest
 import requests
 
-from methods import tag_full_info_provider, tag_contains
+from methods import tag_full_info_provider
 from conftest import request_get_tags_query_full_false_response
 
 
@@ -18,21 +18,18 @@ class TestGetTags:
     @pytest.mark.positive
     @pytest.mark.status_code
     def test_get_tags_status_code(self, request_get_tags_response):
-        status_code, _ = request_get_tags_response
-        assert status_code == 200, "Status code is not 200"
+        assert request_get_tags_response.status_code == 200, "Status code is not 200"
 
     @pytest.mark.tags
     @pytest.mark.positive
     def test_get_tags_groups_amount(self, request_get_tags_response):
-        _, data = request_get_tags_response
-        assert len(data) == 2, 'Tags group amount is wrong'
+        assert len(request_get_tags_response.data) == 2, 'Tags group amount is wrong'
 
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.parametrize("group_name", tags_groups)
     def test_get_tags_groups_presence(self, request_get_tags_response, group_name):
-        _, data = request_get_tags_response
-        assert group_name in data, f'{group_name} tags group is missing'
+        assert group_name in request_get_tags_response.data, f'{group_name} tags group is missing'
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -41,29 +38,27 @@ class TestGetTags:
         pytest.param('nsfw', 7, id='nsfw')
     ))
     def test_get_tags_in_group_amount(self, request_get_tags_response, group_name, amount):
-        _, data = request_get_tags_response
-        assert len(data[group_name]) == amount, 'Amount of versatile group tags is not 9'
+        assert len(request_get_tags_response.data[group_name]) == amount, 'Amount of versatile group tags is not 9'
 
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.parametrize("versatile_tag", versatile_tags)
     def test_get_tags_contains_versatile_tags(self, request_get_tags_response, versatile_tag):
-        _, data = request_get_tags_response
-        assert versatile_tag in data['versatile'], f'{versatile_tag} tag is not present in versatile group'
+        assert versatile_tag in request_get_tags_response.data['versatile'], \
+            f'{versatile_tag} tag is not present in versatile group'
 
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.parametrize("nsfw_tag", nsfw_tags)
     def test_get_tags_contains_nsfw_tags(self, request_get_tags_response, nsfw_tag):
-        _, data = request_get_tags_response
-        assert nsfw_tag in data['nsfw'], f'{nsfw_tag} tag is not present in nsfw group'
+        assert nsfw_tag in request_get_tags_response.data['nsfw'], f'{nsfw_tag} tag is not present in nsfw group'
 
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.xfail(reason="Чому так, воно видає помилку? Проблема порядку?")
     def test_get_tags_contains_maid_and_oppai(self, request_get_tags_response):
-        _, data = request_get_tags_response
-        assert ['maid', 'oppai'] in data['versatile'], 'maid & oppai tags are not present in versatile group'
+        assert ['maid', 'oppai'] in request_get_tags_response.data['versatile'], \
+            'maid & oppai tags are not present in versatile group'
 
 
 class TestGetTagsFullParameterFalse:
