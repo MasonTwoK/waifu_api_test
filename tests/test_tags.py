@@ -111,6 +111,7 @@ class TestGetTagsFullInfoFalse:
 
 class TestGetTagsFullInfoTrue:
     tags_groups = ['versatile', 'nsfw']
+    nsfw_tags = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero']
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -125,6 +126,24 @@ class TestGetTagsFullInfoTrue:
     @pytest.mark.parametrize("group_name", tags_groups)
     def test_get_tags_query_full_true_groups_presence(self, request_get_tags_query_full_true_response, group_name):
         assert group_name in request_get_tags_query_full_true_response.data, f'{group_name} is not present'
+
+    full_info = [
+        {'tag_id': 1, 'name': 'ass', 'is_nsfw': True, 'description': 'Girls with a large butt. '},
+        {'tag_id': 2, 'name': 'ecchi', 'is_nsfw': True, 'description': "Slightly explicit sexual content. "
+                                                                       "Show full to partial nudity. "
+                                                                       "Doesn't show any genital."},
+        {'tag_id': 3, 'name': 'ero', 'is_nsfw': True, 'description': 'Any kind of erotic content, '
+                                                                     'basically any nsfw image.'},
+        {'tag_id': 4, 'name': 'hentai', 'is_nsfw': True, 'description': 'Explicit sexual content.'},
+        {'tag_id': 6, 'name': 'milf', 'is_nsfw': True, 'description': 'A sexually attractive middle-aged woman.'},
+        {'tag_id': 8, 'name': 'oral', 'is_nsfw': True, 'description': 'Oral sex content.'},
+        {'tag_id': 9, 'name': 'paizuri', 'is_nsfw': True, 'description': 'A subcategory of hentai that involves '
+                                                                         'breast sex, also known as titty fucking.'}
+    ]
+
+    @pytest.mark.skip(reason='Need to parametrize')
+    def test_get_tags_query_full_true_contains_info_for_tag(self, request_get_tags_query_full_true_response):
+        assert {} == tag_full_info_provider('ass', request_get_tags_query_full_true_response.data['nsfw'])
 
 
 def test_get_tags_full():
