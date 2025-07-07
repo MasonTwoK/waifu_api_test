@@ -3,7 +3,7 @@
 import pytest
 import requests
 
-from methods import tag_full_info_provider
+from methods import tag_full_info_provider, tag_full_info_comparer
 from conftest import request_get_tags_query_full_false_response
 
 
@@ -127,23 +127,21 @@ class TestGetTagsFullInfoTrue:
     def test_get_tags_query_full_true_groups_presence(self, request_get_tags_query_full_true_response, group_name):
         assert group_name in request_get_tags_query_full_true_response.data, f'{group_name} is not present'
 
-    full_info = [
-        {'tag_id': 1, 'name': 'ass', 'is_nsfw': True, 'description': 'Girls with a large butt. '},
-        {'tag_id': 2, 'name': 'ecchi', 'is_nsfw': True, 'description': "Slightly explicit sexual content. "
-                                                                       "Show full to partial nudity. "
-                                                                       "Doesn't show any genital."},
-        {'tag_id': 3, 'name': 'ero', 'is_nsfw': True, 'description': 'Any kind of erotic content, '
-                                                                     'basically any nsfw image.'},
-        {'tag_id': 4, 'name': 'hentai', 'is_nsfw': True, 'description': 'Explicit sexual content.'},
-        {'tag_id': 6, 'name': 'milf', 'is_nsfw': True, 'description': 'A sexually attractive middle-aged woman.'},
-        {'tag_id': 8, 'name': 'oral', 'is_nsfw': True, 'description': 'Oral sex content.'},
-        {'tag_id': 9, 'name': 'paizuri', 'is_nsfw': True, 'description': 'A subcategory of hentai that involves '
-                                                                         'breast sex, also known as titty fucking.'}
-    ]
-
-    @pytest.mark.skip(reason='Need to parametrize')
-    def test_get_tags_query_full_true_contains_info_for_tag(self, request_get_tags_query_full_true_response):
-        assert {} == tag_full_info_provider('ass', request_get_tags_query_full_true_response.data['nsfw'])
+    @pytest.mark.parametrize("tag_id, name, is_nsfw, description", [
+        pytest.param(1, 'ass', True, 'Girls with a large butt. ', id='ass'),
+        pytest.param(2, 'ecchi', True, "Slightly explicit sexual content. Show full to partial nudity. "
+                                       "Doesn't show any genital.", id='ecchi'),
+        pytest.param(3, 'ero', True, 'Any kind of erotic content, basically any nsfw image.', id='ero'),
+        pytest.param(4, 'hentai', True, 'Explicit sexual content.', id='hentai'),
+        pytest.param(6, 'milf', True, 'A sexually attractive middle-aged woman.', id='milf'),
+        pytest.param(8, 'oral', True, 'Oral sex content.', id='oral'),
+        pytest.param(9, 'paizuri', True, 'A subcategory of hentai that involves breast sex, '
+                                         'also known as titty fucking.', id='paizuri')
+    ])
+    def test_get_tags_query_full_true_contains_info_for_tag(self, request_get_tags_query_full_true_response,
+                                                            tag_id, name, is_nsfw, description):
+        assert tag_full_info_comparer(request_get_tags_query_full_true_response.data['nsfw'],
+                                      tag_id, name, is_nsfw, description), f"{name} tag has incorrect full info"
 
 
 def test_get_tags_full():
