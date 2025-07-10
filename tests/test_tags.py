@@ -1,7 +1,6 @@
 # Tests for page - https://docs.waifu.im/reference/api-reference/tags
 
 import pytest
-import requests
 
 from methods import tag_full_info_provider, tag_full_info_comparer
 from conftest import request_get_tags_query_full_false_response
