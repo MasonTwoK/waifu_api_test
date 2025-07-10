@@ -123,10 +123,14 @@ class TestGetTagsFullInfoTrue:
     def test_get_tags_query_full_true_groups_amount(self, request_get_tags_query_full_true_response):
         assert len(request_get_tags_query_full_true_response.data) == 2, 'Tags group amount is wrong'
 
+    @pytest.mark.tags
+    @pytest.mark.positive
     @pytest.mark.parametrize("group_name", tags_groups)
     def test_get_tags_query_full_true_groups_presence(self, request_get_tags_query_full_true_response, group_name):
         assert group_name in request_get_tags_query_full_true_response.data, f'{group_name} is not present'
 
+    @pytest.mark.tags
+    @pytest.mark.positive
     @pytest.mark.parametrize("tag_id, name, is_nsfw, description", [
         pytest.param(1, 'ass', True, 'Girls with a large butt. ', id='ass'),
         pytest.param(2, 'ecchi', True, "Slightly explicit sexual content. Show full to partial nudity. "
@@ -143,61 +147,14 @@ class TestGetTagsFullInfoTrue:
         assert tag_full_info_comparer(request_get_tags_query_full_true_response.data['nsfw'],
                                       tag_id, name, is_nsfw, description), f"{name} tag has incorrect full info"
 
+    @pytest.mark.tags
+    @pytest.mark.positive
+    def test_get_tags_query_full_true_amount_of_nsfw_tags(self, request_get_tags_query_full_true_response):
+        assert len(request_get_tags_query_full_true_response.data['nsfw']) == 7, 'Amount of nsfw tags is not 7'
 
-def test_get_tags_full():
-    response = requests.get(url='https://api.waifu.im/tags?full=true')
-    data = response.json()
-
-    assert tag_full_info_provider('ass', data['nsfw']) is not None, 'ass tag does not have full info'
-    tag_full_info = tag_full_info_provider('ass', data['nsfw'])
-    assert tag_full_info['tag_id'] == 1
-    assert tag_full_info['description'] == "Girls with a large butt. "
-    assert tag_full_info['is_nsfw'] is True
-    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
-
-    assert tag_full_info_provider('ecchi', data['nsfw']) is not None, 'ecchi tag does not have full info'
-    tag_full_info = tag_full_info_provider('ecchi', data['nsfw'])
-    assert tag_full_info['tag_id'] == 2
-    assert tag_full_info[
-               'description'] == ("Slightly explicit sexual content. Show full to partial nudity. "
-                                  "Doesn't show any genital.")
-    assert tag_full_info['is_nsfw'] is True
-    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
-
-    assert tag_full_info_provider('ero', data['nsfw']) is not None, 'ero tag does not have full info'
-    tag_full_info = tag_full_info_provider('ero', data['nsfw'])
-    assert tag_full_info['tag_id'] == 3
-    assert tag_full_info['description'] == "Any kind of erotic content, basically any nsfw image."
-    assert tag_full_info['is_nsfw'] is True
-    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
-
-    assert tag_full_info_provider('hentai', data['nsfw']) is not None, 'hentai tag does not have full info'
-    tag_full_info = tag_full_info_provider('hentai', data['nsfw'])
-    assert tag_full_info['tag_id'] == 4
-    assert tag_full_info['description'] == "Explicit sexual content."
-    assert tag_full_info['is_nsfw'] is True
-    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
-
-    assert tag_full_info_provider('milf', data['nsfw']) is not None, 'hentai tag does not have full info'
-    tag_full_info = tag_full_info_provider('milf', data['nsfw'])
-    assert tag_full_info['tag_id'] == 6
-    assert tag_full_info['description'] == "A sexually attractive middle-aged woman."
-    assert tag_full_info['is_nsfw'] is True
-    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
-
-    assert tag_full_info_provider('oral', data['nsfw']) is not None, 'oral tag does not have full info'
-    tag_full_info = tag_full_info_provider('oral', data['nsfw'])
-    assert tag_full_info['tag_id'] == 8
-    assert tag_full_info['description'] == "Oral sex content."
-    assert tag_full_info['is_nsfw'] is True
-    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
-
-    assert tag_full_info_provider('paizuri', data['nsfw']) is not None, 'paizuri tag does not have full info'
-    tag_full_info = tag_full_info_provider('paizuri', data['nsfw'])
-    assert tag_full_info['tag_id'] == 9
-    assert tag_full_info['description'] == ("A subcategory of hentai that involves breast sex, "
-                                            "also known as titty fucking.")
-    assert tag_full_info['is_nsfw'] is True
-    assert len(tag_full_info) == 4, 'Amount of information fields are not equal 4'
-
-    assert len(data['nsfw']) == 7, 'Amount of nsfw group tags is 7'
+    @pytest.mark.tags
+    @pytest.mark.positive
+    @pytest.mark.parametrize("nsfw_tag", nsfw_tags)
+    def test_get_tags_query_full_true_nsfw_tags_info_size(self, request_get_tags_query_full_true_response, nsfw_tag):
+        assert len(tag_full_info_provider(nsfw_tag, request_get_tags_query_full_true_response.data['nsfw'])) == 4, \
+            f"{nsfw_tag} info fields don't equal 4"
