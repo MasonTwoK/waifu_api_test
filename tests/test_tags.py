@@ -111,6 +111,8 @@ class TestGetTagsFullInfoFalse:
 class TestGetTagsFullInfoTrue:
     tags_groups = ['versatile', 'nsfw']
     nsfw_tags = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero']
+    versatile_tags = ['maid', 'waifu', 'marin-kitagawa', 'mori-calliope', 'raiden-shogun', 'oppai', 'selfies',
+                      'uniform', 'kamisato-ayaka']
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -141,10 +143,35 @@ class TestGetTagsFullInfoTrue:
         pytest.param(9, 'paizuri', True, 'A subcategory of hentai that involves breast sex, '
                                          'also known as titty fucking.', id='paizuri')
     ])
-    def test_get_tags_query_full_true_contains_info_for_tag(self, request_get_tags_query_full_true_response,
-                                                            tag_id, name, is_nsfw, description):
+    def test_get_tags_query_full_true_contains_info_for_nsfw_tags(self, request_get_tags_query_full_true_response,
+                                                                  tag_id, name, is_nsfw, description):
         assert tag_full_info_comparer(request_get_tags_query_full_true_response.data['nsfw'],
                                       tag_id, name, is_nsfw, description), f"{name} tag has incorrect full info"
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    @pytest.mark.parametrize("tag_id, name, is_nsfw, description", [
+        pytest.param(5, "marin-kitagawa", False, "One of two main protagonists (alongside Wakana Gojo) in the anime "
+                                                 "and manga series My Dress-Up Darling.", id="marin-kitagawa"),
+        pytest.param(7, "oppai", False, "Girls with large breasts", id="oppai"),
+        pytest.param(10, "selfies", False, "A photo-like image of a waifu.", id="selfies"),
+        pytest.param(11, "uniform", False, "Girls wearing any kind of uniform, cosplay etc... ", id="uniform"),
+        pytest.param(12, 'waifu', False, "A female anime/manga character.", id='waifu'),
+        pytest.param(13, 'maid', False, "Cute womans or girl employed to do domestic work in their working uniform.",
+                     id='maid'),
+        pytest.param(14, "mori-calliope", False,
+                     "Mori Calliope is an English Virtual YouTuber (VTuber) associated with hololive as part of its "
+                     "first-generation English branch of Vtubers.", id="mori-calliope"),
+        pytest.param(15, "raiden-shogun", False,
+                     "Genshin Impact's Raiden Shogun is a fierce lady in the Genshin ranks.", id="raiden-shogun"),
+        pytest.param(17, "kamisato-ayaka", False, "Kamisato Ayaka is a playable Cryo character in Genshin Impact.",
+                     id="kamisato-ayaka")
+    ])
+    def test_get_query_full_true_contains_info_for_versatile_tags(self, request_get_tags_query_full_true_response,
+                                                                  tag_id, name, is_nsfw, description):
+        assert tag_full_info_comparer(
+            request_get_tags_query_full_true_response.data['versatile'], tag_id, name, is_nsfw, description), \
+            f'Tag {name} full info is wrong'
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -153,7 +180,22 @@ class TestGetTagsFullInfoTrue:
 
     @pytest.mark.tags
     @pytest.mark.positive
+    def test_tags_query_full_true_amount_of_versatile_tags(self, request_get_tags_query_full_true_response):
+        assert len(request_get_tags_query_full_true_response.data['versatile']) == 9, \
+            'Amount of versatile tags is not 9'
+
+    @pytest.mark.tags
+    @pytest.mark.positive
     @pytest.mark.parametrize("nsfw_tag", nsfw_tags)
     def test_get_tags_query_full_true_nsfw_tags_info_size(self, request_get_tags_query_full_true_response, nsfw_tag):
         assert len(tag_full_info_provider(nsfw_tag, request_get_tags_query_full_true_response.data['nsfw'])) == 4, \
             f"{nsfw_tag} info fields don't equal 4"
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    @pytest.mark.parametrize("versatile_tag", versatile_tags)
+    def test_get_tags_query_full_true_versatile_tags_info_size(self, request_get_tags_query_full_true_response,
+                                                               versatile_tag):
+        assert len(tag_full_info_provider(
+            versatile_tag, request_get_tags_query_full_true_response.data['versatile'])) == 4, \
+            f"{versatile_tag} info fields don't equal 4"
