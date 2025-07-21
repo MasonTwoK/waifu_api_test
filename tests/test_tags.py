@@ -1,6 +1,5 @@
 # Tests for page - https://docs.waifu.im/reference/api-reference/tags
 
-import os
 import pytest
 
 from methods import tag_full_info_provider, tag_full_info_comparer
