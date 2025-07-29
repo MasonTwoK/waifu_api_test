@@ -2,7 +2,7 @@
 
 import pytest
 
-from methods import tag_full_info_provider, tag_full_info_comparer
+from utils import tag_full_info_provider, tag_full_info_comparer
 from data import tags_full_info, tags_groups, nsfw_tags, versatile_tags
 
 
@@ -34,7 +34,8 @@ class TestGetTags:
             pytest.param('nsfw', 7, id='nsfw')
     ))
     def test_get_tags_in_group_amount(self, request_get_tags_response, group_name, amount):
-        assert len(request_get_tags_response.data[group_name]) == amount, 'Amount of versatile group tags is not 9'
+        assert len(request_get_tags_response.data[group_name]) == amount, \
+            f'Amount of tags in {group_name} group are not {amount}'
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -48,13 +49,6 @@ class TestGetTags:
     @pytest.mark.parametrize("nsfw_tag", nsfw_tags)
     def test_get_tags_contains_nsfw_tags(self, request_get_tags_response, nsfw_tag):
         assert nsfw_tag in request_get_tags_response.data['nsfw'], f'{nsfw_tag} tag is not present in nsfw group'
-
-    @pytest.mark.tags
-    @pytest.mark.positive
-    @pytest.mark.xfail(reason="Чому так, воно видає помилку? Проблема порядку?")
-    def test_get_tags_contains_maid_and_oppai(self, request_get_tags_response):
-        assert ['maid', 'oppai'] in request_get_tags_response.data['versatile'], \
-            'maid & oppai tags are not present in versatile group'
 
 
 class TestGetTagsFullInfoFalse:
@@ -70,6 +64,7 @@ class TestGetTagsFullInfoFalse:
     def test_get_tags_query_full_false_groups_amount(self, request_get_tags_query_full_false_response):
         assert len(request_get_tags_query_full_false_response.data) == 2, 'Tags group amount is wrong'
 
+    # Maybe we don't need this test?
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.parametrize("group_name", tags_groups)
@@ -147,3 +142,11 @@ class TestGetTagsFullInfoTrue:
     def test_get_tags_query_full_true_tags_info_size(self, tag_full_info, request_get_tags_query_full_true_response):
         assert len(tag_full_info_provider(request_get_tags_query_full_true_response.data, tag_full_info)) == 4, \
             f"{tag_full_info['name']} info fields don't equal 4"
+
+
+@pytest.mark.xfail(reason="Чому так, воно видає помилку? Проблема порядку?")
+@pytest.mark.tags
+@pytest.mark.positive
+def test_get_tags_contains_maid_and_oppai(self, request_get_tags_response):
+    assert ['maid', 'oppai'] in request_get_tags_response.data['versatile'], \
+        'maid & oppai tags are not present in versatile group'
