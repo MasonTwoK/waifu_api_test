@@ -147,11 +147,11 @@ class TestGetTagsFullInfoTrue:
 @pytest.mark.tags
 @pytest.mark.negative
 class TestGetTagsErrorCodes:
-    def test_get_tags_error_code_400(self, request_get_tags_query_full_wrong_response):
+    def test_get_tags_query_full_error_code_400(self, request_get_tags_query_full_wrong_response):
         assert request_get_tags_query_full_wrong_response.status_code == 400, \
             f"Status code {request_get_tags_query_full_wrong_response.status_code} is not 400"
 
-    def test_get_tags_error_code_400_details(self, request_get_tags_query_full_wrong_response):
+    def test_get_tags_query_full_error_code_400_details(self, request_get_tags_query_full_wrong_response):
         assert (request_get_tags_query_full_wrong_response.data['detail'] ==
                 'Bad Request, error on full, failed to bind field value to bool'), 'Detail message is wrong'
 
