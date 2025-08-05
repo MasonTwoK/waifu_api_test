@@ -132,16 +132,28 @@ class TestGetTagsFullInfoTrue:
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.parametrize("tag_full_info", tags_full_info)
-    def test_get_tags_query_full_true_contains_info(self, tag_full_info, request_get_tags_query_full_true_response):
-        assert tag_full_info_comparer(request_get_tags_query_full_true_response.data, tag_full_info), \
-            f"{tag_full_info['name']} tag has incorrect full info"
+    def test_get_tags_query_full_true_tags_info_size(self, tag_full_info, request_get_tags_query_full_true_response):
+        assert len(tag_full_info_provider(request_get_tags_query_full_true_response.data, tag_full_info)) == 4, \
+            f"{tag_full_info['name']} info fields don't equal 4"
 
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.parametrize("tag_full_info", tags_full_info)
-    def test_get_tags_query_full_true_tags_info_size(self, tag_full_info, request_get_tags_query_full_true_response):
-        assert len(tag_full_info_provider(request_get_tags_query_full_true_response.data, tag_full_info)) == 4, \
-            f"{tag_full_info['name']} info fields don't equal 4"
+    def test_get_tags_query_full_true_contains_info(self, tag_full_info, request_get_tags_query_full_true_response):
+        assert tag_full_info_comparer(request_get_tags_query_full_true_response.data, tag_full_info), \
+            f"{tag_full_info['name']} tag has incorrect full info"
+
+
+@pytest.mark.tags
+@pytest.mark.negative
+class TestGetTagsErrorCodes:
+    def test_get_tags_error_code_400(self, request_get_tags_query_full_wrong_response):
+        assert request_get_tags_query_full_wrong_response.status_code == 400, \
+            f"Status code {request_get_tags_query_full_wrong_response.status_code} is not 400"
+
+    def test_get_tags_error_code_400_details(self, request_get_tags_query_full_wrong_response):
+        assert (request_get_tags_query_full_wrong_response.data['detail'] ==
+                'Bad Request, error on full, failed to bind field value to bool'), 'Detail message is wrong'
 
 
 @pytest.mark.xfail(reason="Чому так, воно видає помилку? Проблема порядку?")

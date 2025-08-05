@@ -33,3 +33,13 @@ def request_get_tags_query_full_true_response(request, info=True):
     request.data = response.json()
 
     yield request
+
+
+@pytest.fixture(scope="class")
+def request_get_tags_query_full_wrong_response(request, info='Wrong'):
+    response = requests.get(url=f"https://api.waifu.im/tags?full={info}", headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+
+    yield request
