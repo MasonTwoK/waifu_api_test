@@ -3,7 +3,7 @@
 import pytest
 
 from utils import tag_full_info_provider, tag_full_info_comparer
-from data import tags_full_info, tags_groups, nsfw_tags, versatile_tags
+from data import tags_full_info, tags_groups, nsfw_tags, versatile_tags, tags_in_group_amount
 
 
 @pytest.mark.tags
@@ -29,10 +29,7 @@ class TestGetTags:
 
     @pytest.mark.tags
     @pytest.mark.positive
-    @pytest.mark.parametrize("group_name, amount", (
-            pytest.param('versatile', 9, id='versatile'),
-            pytest.param('nsfw', 7, id='nsfw')
-    ))
+    @pytest.mark.parametrize("group_name, amount", tags_in_group_amount)
     def test_get_tags_in_group_amount(self, request_get_tags_response, group_name, amount):
         assert len(request_get_tags_response.data[group_name]) == amount, \
             f'Amount of tags in {group_name} group are not {amount}'
@@ -73,10 +70,7 @@ class TestGetTagsFullInfoFalse:
 
     @pytest.mark.tags
     @pytest.mark.positive
-    @pytest.mark.parametrize("group_name, amount", [
-        pytest.param("nsfw", 7, id='nsfw'),
-        pytest.param("versatile", 9, id='versatile')
-    ])
+    @pytest.mark.parametrize("group_name, amount", tags_in_group_amount)
     def test_get_tags_query_full_false_in_group_amount(self,
                                                        request_get_tags_query_full_false_response, group_name, amount):
         assert len(request_get_tags_query_full_false_response.data[group_name]) == amount, \

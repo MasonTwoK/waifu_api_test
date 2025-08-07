@@ -119,3 +119,8 @@ tags_full_info = [
             }, id='kamisato-ayaka'
         ),
 ]
+
+tags_in_group_amount = [
+    pytest.param('versatile', 9, id='versatile'),
+    pytest.param('nsfw', 7, id='nsfw')
+]
