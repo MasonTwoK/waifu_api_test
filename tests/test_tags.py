@@ -2,8 +2,8 @@
 
 import pytest
 
-from utils import tag_full_info_provider, tag_full_info_comparer
-from data import tags_full_info, tags_groups, nsfw_tags, versatile_tags, tags_in_group_amount
+from utils import tag_full_info_provider, tag_full_info_comparer, tag_full_info_id_contains
+from data import tags_full_info, tags_groups, nsfw_tags, versatile_tags, tags_in_group_amount, tag_full_info_tag_ids
 
 
 @pytest.mark.tags
@@ -133,6 +133,12 @@ class TestGetTagsFullInfoTrue:
     def test_get_tags_query_full_true_contains_info(self, tag_full_info, request_get_tags_query_full_true_response):
         assert tag_full_info_comparer(request_get_tags_query_full_true_response.data, tag_full_info), \
             f"{tag_full_info['name']} tag has incorrect full info"
+
+    @pytest.mark.parametrize("tag_name, tag_id", tag_full_info_tag_ids)
+    def test_get_tags_query_full_true_contains_info_tags_id(self, request_get_tags_query_full_true_response, tag_name,
+                                                            tag_id):
+        assert tag_full_info_id_contains(request_get_tags_query_full_true_response.data, tag_name) == tag_id, \
+            f"Tag: {tag_name} is not equal tag_id: {tag_id}"
 
 
 @pytest.mark.tags

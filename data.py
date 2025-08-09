@@ -125,3 +125,22 @@ tags_full_info = [
             }, id='kamisato-ayaka'
         ),
 ]
+
+tag_full_info_tag_ids = [
+    pytest.param('ass', 1, id='ass'),
+    pytest.param('ecchi', 2, id='ecchi'),
+    pytest.param('ero', 3, id='ero'),
+    pytest.param('hentai', 4, id='hentai'),
+    pytest.param('milf', 6, id='milf'),
+    pytest.param('oral', 8, id='oral'),
+    pytest.param('paizuri', 9, id='paizuri'),
+    pytest.param('maid', 13, id='maid'),
+    pytest.param('waifu', 12, id='waifu'),
+    pytest.param('marin-kitagawa', 5, id='marin-kitagawa'),
+    pytest.param('mori-calliope', 14, id='mori-calliope'),
+    pytest.param('raiden-shogun', 15, id='raiden-shogun'),
+    pytest.param('oppai', 7, id='oppai'),
+    pytest.param('selfies', 10, id='selfies'),
+    pytest.param('uniform', 11, id='uniform'),
+    pytest.param('kamisato-ayaka', 17, id='kamisato-ayaka'),
+]
