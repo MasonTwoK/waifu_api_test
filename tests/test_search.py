@@ -69,7 +69,7 @@ class TestCasesPositive:
             assert response.status_code == 200
 
             content = response.json()
-            assert content['images'][0]['is_nsfw'] == False
+            assert content['images'][0]['is_nsfw'] is False
 
     def test_get_search_single_tag_included(self):
         random_tag = tag_randomizer()
