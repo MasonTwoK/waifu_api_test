@@ -114,10 +114,7 @@ class TestGetTagsFullInfoTrue:
 
     @pytest.mark.tags
     @pytest.mark.positive
-    @pytest.mark.parametrize("group_tag, amount", [
-        pytest.param('nsfw',  7, id='nsfw'),
-        pytest.param('versatile', 9, id='versatile')
-    ])
+    @pytest.mark.parametrize("group_tag, amount", tags_in_group_amount)
     def test_get_tags_query_full_true_amount_of_tags_in_group(self, request_get_tags_query_full_true_response,
                                                               group_tag, amount):
         assert len(request_get_tags_query_full_true_response.data[group_tag]) == amount, \
