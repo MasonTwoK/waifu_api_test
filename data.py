@@ -2,8 +2,14 @@ import pytest
 
 tags_groups = ['versatile', 'nsfw']
 nsfw_tags = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero']
-versatile_tags = ['maid', 'waifu', 'marin-kitagawa', 'mori-calliope', 'raiden-shogun', 'oppai', 'selfies', 'uniform',
-                  'kamisato-ayaka']
+versatile_tags = ['maid', 'waifu', 'marin-kitagawa', 'mori-calliope', 'raiden-shogun',
+                  'oppai', 'selfies', 'uniform', 'kamisato-ayaka']
+
+tags_in_group_amount = [
+    pytest.param('versatile', 9, id='versatile'),
+    pytest.param('nsfw', 7, id='nsfw')
+]
+
 tags_full_info = [
         pytest.param({
             'tag_id': 1,
@@ -118,9 +124,4 @@ tags_full_info = [
             'description': 'Kamisato Ayaka is a playable Cryo character in Genshin Impact.'
             }, id='kamisato-ayaka'
         ),
-]
-
-tags_in_group_amount = [
-    pytest.param('versatile', 9, id='versatile'),
-    pytest.param('nsfw', 7, id='nsfw')
 ]
