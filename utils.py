@@ -40,16 +40,35 @@ def tag_full_info_provider(data, tag_full_info):
     return None
 
 
-def tag_full_info_id_contains(data, tag_name):
-    tags_list = []  # Чому я обов'язково повинен визначати цю змінну?
+def tag_full_info_tags_group_selector(data, tag_name):
+    for nsfw_tag in nsfw_tags:
+        if nsfw_tag == tag_name:
+            return data['nsfw']
 
-    for tag in nsfw_tags:
-        if tag == tag_name:
-            tags_list = data['nsfw']
+    for versatile_tag in versatile_tags:
+        if versatile_tag == tag_name:
+            return data['versatile']
 
-    for tag in versatile_tags:
-        if tag == tag_name:
-            tags_list = data['versatile']
+    return None
+
+
+def tag_full_info_tag_name_provider(data, tag_name):
+    tags_list = tag_full_info_tags_group_selector(data, tag_name)
+
+    if tags_list is None:
+        return None
+
+    for tag in range(len(tags_list)):
+        if tags_list[tag]['name'] == tag_name:
+            return True
+    return None
+
+
+def tag_full_info_id_provider(data, tag_name):
+    tags_list = tag_full_info_tags_group_selector(data, tag_name)
+
+    if tags_list is None:
+        return None
 
     for tag in range(len(tags_list)):
         if tags_list[tag]['name'] == tag_name:
