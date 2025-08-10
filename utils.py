@@ -74,3 +74,15 @@ def tag_full_info_id_provider(data, tag_name):
         if tags_list[tag]['name'] == tag_name:
             return tags_list[tag]['tag_id']
     return None
+
+
+def tag_full_info_description_provider(data, tag_name):
+    tags_list = tag_full_info_tags_group_selector(data, tag_name)
+
+    if tags_list is None:
+        return None
+
+    for tag in range(len(tags_list)):
+        if tags_list[tag]['name'] == tag_name:
+            return tags_list[tag]['description']
+    return None
