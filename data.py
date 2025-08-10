@@ -156,14 +156,20 @@ tag_full_info_tag_descriptions = [
     pytest.param('hentai', 'Explicit sexual content.', id='hentai'),
     pytest.param('milf', 'A sexually attractive middle-aged woman.', id='milf'),
     pytest.param('oral', 'Oral sex content.', id='oral'),
-    pytest.param('paizuri', 'A subcategory of hentai that involves breast sex, also known as titty fucking.', id='paizuri'),
+    pytest.param('paizuri', 'A subcategory of hentai that involves breast sex, '
+                            'also known as titty fucking.', id='paizuri'),
     pytest.param('maid', 'Cute womans or girl employed to do domestic work in their working uniform.', id='maid'),
     pytest.param('waifu', "A female anime/manga character.", id='waifu'),
-    pytest.param('marin-kitagawa', "One of two main protagonists (alongside Wakana Gojo) in the anime and manga series My Dress-Up Darling.", id='marin-kitagawa'),
-    pytest.param('mori-calliope', 'Mori Calliope is an English Virtual YouTuber (VTuber) associated with hololive as part of its first-generation English branch of Vtubers.', id='mori-calliope'),
-    pytest.param('raiden-shogun', "Genshin Impact's Raiden Shogun is a fierce lady in the Genshin ranks.", id='raiden-shogun'),
+    pytest.param('marin-kitagawa', "One of two main protagonists (alongside Wakana Gojo) "
+                                   "in the anime and manga series My Dress-Up Darling.", id='marin-kitagawa'),
+    pytest.param('mori-calliope', 'Mori Calliope is an English Virtual YouTuber (VTuber) associated with '
+                                  'hololive as part of '
+                                  'its first-generation English branch of Vtubers.', id='mori-calliope'),
+    pytest.param('raiden-shogun', "Genshin Impact's Raiden Shogun is a fierce lady "
+                                  "in the Genshin ranks.", id='raiden-shogun'),
     pytest.param('oppai', "Girls with large breasts", id='oppai'),
     pytest.param('selfies', "A photo-like image of a waifu.", id='selfies'),
     pytest.param('uniform', "Girls wearing any kind of uniform, cosplay etc... ", id='uniform'),
-    pytest.param('kamisato-ayaka', 'Kamisato Ayaka is a playable Cryo character in Genshin Impact.', id='kamisato-ayaka')
-]
+    pytest.param('kamisato-ayaka', 'Kamisato Ayaka is a playable Cryo character '
+                                   'in Genshin Impact.', id='kamisato-ayaka')
+    ]
