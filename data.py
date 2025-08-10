@@ -144,3 +144,7 @@ tag_full_info_tag_ids = [
     pytest.param('uniform', 11, id='uniform'),
     pytest.param('kamisato-ayaka', 17, id='kamisato-ayaka'),
 ]
+
+tag_full_info_tag_names = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero', 'maid', 'waifu',
+                           'marin-kitagawa', 'mori-calliope', 'raiden-shogun', 'oppai', 'selfies',
+                           'uniform', 'kamisato-ayaka']
