@@ -86,3 +86,12 @@ def tag_full_info_description_provider(data, tag_name):
         if tags_list[tag]['name'] == tag_name:
             return tags_list[tag]['description']
     return None
+
+
+def tag_full_info_is_nsfw_state_provider(data, tag_name):
+    tag_list = tag_full_info_tags_group_selector(data, tag_name)
+
+    for tag in range(len(tag_list)):
+        if tag_list[tag]['name'] == tag_name:
+            return tag_list[tag]['is_nsfw']
+    return None

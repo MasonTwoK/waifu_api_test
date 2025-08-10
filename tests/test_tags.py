@@ -3,9 +3,10 @@
 import pytest
 
 from utils import (tag_full_info_provider, tag_full_info_comparer, tag_full_info_id_provider,
-                   tag_full_info_tag_name_provider, tag_full_info_description_provider)
+                   tag_full_info_tag_name_provider, tag_full_info_description_provider,
+                   tag_full_info_is_nsfw_state_provider)
 from data import (tags_full_info, tags_groups, nsfw_tags, versatile_tags, tags_in_group_amount, tag_full_info_tag_ids,
-                  tag_full_info_tag_names, tag_full_info_tag_descriptions)
+                  tag_full_info_tag_names, tag_full_info_tag_descriptions, tag_full_info_tag_is_nsfw_states)
 
 
 @pytest.mark.tags
@@ -145,20 +146,26 @@ class TestGetTagsFullInfoTrue:
 
     @pytest.mark.tags
     @pytest.mark.positive
-    @pytest.mark.parametrize("tag_name, tag_id", tag_full_info_tag_ids)
-    def test_get_tags_query_full_true_contains_info_tags_id(self, request_get_tags_query_full_true_response, tag_name,
-                                                            tag_id):
-        assert tag_full_info_id_provider(request_get_tags_query_full_true_response.data, tag_name) == tag_id, \
-            f"Tag's {tag_name}  tag id: {tag_id} is wrong"
-
-    @pytest.mark.tags
-    @pytest.mark.positive
     @pytest.mark.parametrize("tag_name, tag_description", tag_full_info_tag_descriptions)
-    def test_get_tags_query_full_true_contains_info_tags_description(self, request_get_tags_query_full_true_response,
-                                                                     tag_name, tag_description):
+    def test_get_tags_query_full_true_contains_info_description(self, request_get_tags_query_full_true_response,
+                                                                tag_name, tag_description):
         assert (tag_full_info_description_provider(request_get_tags_query_full_true_response.data, tag_name) ==
                 tag_description), \
             f"Tag's {tag_name}  tag description: {tag_description} is wrong"
+
+    @pytest.mark.tags
+    @pytest.mark.positive
+    @pytest.mark.parametrize("tag_name, tag_id", tag_full_info_tag_ids)
+    def test_get_tags_query_full_true_contains_info_id(self, request_get_tags_query_full_true_response, tag_name,
+                                                       tag_id):
+        assert tag_full_info_id_provider(request_get_tags_query_full_true_response.data, tag_name) == tag_id, \
+            f"Tag's {tag_name}  tag id: {tag_id} is wrong"
+
+    @pytest.mark.parametrize("tag_name, is_nsfw_state", tag_full_info_tag_is_nsfw_states)
+    def test_get_tags_query_full_true_contains_info_is_nsfw_state(self, request_get_tags_query_full_true_response,
+                                                                  tag_name, is_nsfw_state):
+        assert (tag_full_info_is_nsfw_state_provider(request_get_tags_query_full_true_response.data, tag_name) ==
+                is_nsfw_state), f"Tag's {tag_name}  is_nsfw state: {is_nsfw_state} is wrong"
 
 
 @pytest.mark.tags

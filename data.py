@@ -151,7 +151,8 @@ tag_full_info_tag_names = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 
 
 tag_full_info_tag_descriptions = [
     pytest.param('ass', 'Girls with a large butt. ', id='ass'),
-    pytest.param('ecchi', "Slightly explicit sexual content. Show full to partial nudity. Doesn't show any genital.", id='ecchi'),
+    pytest.param('ecchi', "Slightly explicit sexual content. Show full to partial nudity. "
+                          "Doesn't show any genital.", id='ecchi'),
     pytest.param('ero', 'Any kind of erotic content, basically any nsfw image.', id='ero'),
     pytest.param('hentai', 'Explicit sexual content.', id='hentai'),
     pytest.param('milf', 'A sexually attractive middle-aged woman.', id='milf'),
@@ -173,3 +174,22 @@ tag_full_info_tag_descriptions = [
     pytest.param('kamisato-ayaka', 'Kamisato Ayaka is a playable Cryo character '
                                    'in Genshin Impact.', id='kamisato-ayaka')
     ]
+
+tag_full_info_tag_is_nsfw_states = [
+    pytest.param('ass', True, id='ass'),
+    pytest.param('ecchi', True, id='ecchi'),
+    pytest.param('ero', True, id='ero'),
+    pytest.param('hentai', True, id='hentai'),
+    pytest.param('milf', True, id='milf'),
+    pytest.param('oral', True, id='oral'),
+    pytest.param('paizuri', True, id='paizuri'),
+    pytest.param('maid', False, id='maid'),
+    pytest.param('waifu', False, id='waifu'),
+    pytest.param('marin-kitagawa', False, id='marin-kitagawa'),
+    pytest.param('mori-calliope', False, id='mori-calliope'),
+    pytest.param('raiden-shogun', False, id='raiden-shogun'),
+    pytest.param('oppai', False, id='oppai'),
+    pytest.param('selfies', False, id='selfies'),
+    pytest.param('uniform', False, id='uniform'),
+    pytest.param('kamisato-ayaka', False, id='kamisato-ayaka'),
+]
