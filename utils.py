@@ -71,18 +71,6 @@ def tag_full_info_is_nsfw_state_provider(data, tag_name):
     return None
 
 
-def tag_full_info_comparer(data, tag_full_info):
-    tags_list = tag_full_info_tags_group_selector(data, tag_full_info['name'])
-    if tags_list is None:
-        return None
-
-    for list_element in range(len(tags_list)):
-        if tags_list[list_element]['name'] == tag_full_info['name']:
-            if tags_list[list_element] == tag_full_info:
-                return True
-    return None
-
-
 def tag_full_info_provider(data, tag_full_info):
     tags_list = tag_full_info_tags_group_selector(data, tag_full_info['name'])
     if tags_list is None:
@@ -91,4 +79,12 @@ def tag_full_info_provider(data, tag_full_info):
     for list_element in range(len(tags_list)):
         if tags_list[list_element]['name'] == tag_full_info['name']:
             return tags_list[list_element]
+    return None
+
+
+def tag_full_info_comparer(data, tag_full_info):
+    tags_list_element = tag_full_info_provider(data, tag_full_info)
+
+    if tags_list_element == tag_full_info:
+        return True
     return None
