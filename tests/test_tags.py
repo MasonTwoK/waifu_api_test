@@ -10,6 +10,7 @@ from data import (tags_full_info, tags_groups, nsfw_tags, versatile_tags, tags_i
 
 
 @pytest.mark.tags
+@pytest.mark.positive
 class TestGetTags:
 
     @pytest.mark.tags
@@ -51,6 +52,8 @@ class TestGetTags:
         assert nsfw_tag in request_get_tags_response.data['nsfw'], f'{nsfw_tag} tag is not present in nsfw group'
 
 
+@pytest.mark.tags
+@pytest.mark.positive
 class TestGetTagsFullInfoFalse:
 
     @pytest.mark.tags
@@ -96,6 +99,8 @@ class TestGetTagsFullInfoFalse:
             f'{nsfw_tag} tag is not present in nsfw group'
 
 
+@pytest.mark.tags
+@pytest.mark.positive
 class TestGetTagsFullInfoTrue:
 
     @pytest.mark.tags
@@ -166,8 +171,6 @@ class TestGetTagsFullInfoTrue:
     def test_get_tags_query_full_true_contains_info(self, tag_full_info, request_get_tags_query_full_true_response):
         assert tag_full_info_comparer(request_get_tags_query_full_true_response.data, tag_full_info), \
             f"{tag_full_info['name']} tag has incorrect full info"
-
-
 
 
 @pytest.mark.tags
