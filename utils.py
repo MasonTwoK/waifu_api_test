@@ -29,7 +29,6 @@ def tag_full_info_tags_group_selector(data, tag_name):
 
 def tag_full_info_tag_name_provider(data, tag_name):
     tags_list = tag_full_info_tags_group_selector(data, tag_name)
-
     if tags_list is None:
         return None
 
@@ -41,7 +40,6 @@ def tag_full_info_tag_name_provider(data, tag_name):
 
 def tag_full_info_id_provider(data, tag_name):
     tags_list = tag_full_info_tags_group_selector(data, tag_name)
-
     if tags_list is None:
         return None
 
@@ -53,7 +51,6 @@ def tag_full_info_id_provider(data, tag_name):
 
 def tag_full_info_description_provider(data, tag_name):
     tags_list = tag_full_info_tags_group_selector(data, tag_name)
-
     if tags_list is None:
         return None
 
@@ -65,7 +62,6 @@ def tag_full_info_description_provider(data, tag_name):
 
 def tag_full_info_is_nsfw_state_provider(data, tag_name):
     tags_list = tag_full_info_tags_group_selector(data, tag_name)
-
     if tags_list is None:
         return None
 
