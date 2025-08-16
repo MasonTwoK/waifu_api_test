@@ -3,31 +3,11 @@
 import pytest
 import requests
 import os
-import random
+from utils import tag_randomizer, tags_comparer
 
 
 url = "https://api.waifu.im/search"
 auth_token = os.environ['auth_token']  # How to get a token https://docs.waifu.im/authorization
-
-
-def tag_randomizer():
-    list_of_tags = []
-
-    response = requests.get(url='https://api.waifu.im/tags')
-    content = response.json()
-
-    for i in range(len(list(content))):
-        list_of_tags += list(content.values())[i]
-        # Is there something wrong about it https://www.geeksforgeeks.org/python-select-random-value-from-a-list/ ?
-
-    return random.choice(list_of_tags)
-
-
-def tags_comparer(tag, content):
-    for element in content['images'][0]['tags']:
-        if element['name'] == tag:
-            return True
-    return False
 
 
 class TestCasesPositive:
@@ -51,9 +31,11 @@ class TestCasesPositive:
         assert isinstance(content['images'][0]['favorites'], int)
         assert isinstance(content['images'][0]['dominant_color'], str)
         assert isinstance(content['images'][0]['source'], str) or content['images'][0]['source'] is None
-        assert isinstance(content['images'][0]['artist'], dict) or content['images'][0]['artist'] is None # TODO: Need to investigate behaviour here..
+        # TODO: Need to investigate behaviour below..
+        assert isinstance(content['images'][0]['artist'], dict) or content['images'][0]['artist'] is None
         assert isinstance(content['images'][0]['uploaded_at'], str)
-        assert (content['images'][0]['liked_at'] is None) or (isinstance(content['images'][0]['liked_at'], str))  # TODO: Need to investigate behaviour here..
+        # TODO: Need to investigate behaviour below..
+        assert (content['images'][0]['liked_at'] is None) or (isinstance(content['images'][0]['liked_at'], str))
         assert isinstance(content['images'][0]['is_nsfw'], bool)
         assert isinstance(content['images'][0]['width'], int)
         assert isinstance(content['images'][0]['height'], int)

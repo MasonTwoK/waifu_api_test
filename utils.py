@@ -1,3 +1,5 @@
+import requests
+import random
 from data import nsfw_tags, versatile_tags
 
 # def tag_contains(searched_tag, list_of_tags):
@@ -88,3 +90,23 @@ def tag_full_info_comparer(data, tag_full_info):
     if tags_list_element == tag_full_info:
         return True
     return None
+
+
+def tag_randomizer():
+    list_of_tags = []
+
+    response = requests.get(url='https://api.waifu.im/tags')
+    content = response.json()
+
+    for i in range(len(list(content))):
+        list_of_tags += list(content.values())[i]
+        # Is there something wrong about it https://www.geeksforgeeks.org/python-select-random-value-from-a-list/ ?
+
+    return random.choice(list_of_tags)
+
+
+def tags_comparer(tag, content):
+    for element in content['images'][0]['tags']:
+        if element['name'] == tag:
+            return True
+    return False
