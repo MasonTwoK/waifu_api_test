@@ -4,10 +4,13 @@ import pytest
 import requests
 import os
 from utils import tag_randomizer, tags_comparer
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 url = "https://api.waifu.im/search"
-auth_token = os.environ['auth_token']  # How to get a token https://docs.waifu.im/authorization
+auth_token = os.environ['AUTH_TOKEN']  # How to get a token https://docs.waifu.im/authorization
 
 
 class TestCasesPositive:
