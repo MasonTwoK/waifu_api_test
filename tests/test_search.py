@@ -13,6 +13,15 @@ url = "https://api.waifu.im/search"
 auth_token = os.environ['AUTH_TOKEN']  # How to get a token https://docs.waifu.im/authorization
 
 
+class TestGetSearch:
+    def test_get_search_random_status_code(self, request_get_search_random_response):
+        assert request_get_search_random_response.status_code == 200, "Status code is not 200"
+
+    def test_get_search_random_single_image(self, request_get_search_random_response):
+        assert len(request_get_search_random_response.data['images']) == 1, \
+            "Random search contains more than single image"
+
+
 class TestCasesPositive:
     def test_get_search_random(self):
 
