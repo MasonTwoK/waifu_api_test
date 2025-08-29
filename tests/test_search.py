@@ -14,12 +14,16 @@ auth_token = os.environ['AUTH_TOKEN']  # How to get a token https://docs.waifu.i
 
 
 class TestGetSearch:
-    def test_get_search_random_status_code(self, request_get_search_random_response):
+    def test_get_search_random_img_status_code(self, request_get_search_random_response):
         assert request_get_search_random_response.status_code == 200, "Status code is not 200"
 
-    def test_get_search_random_single_image(self, request_get_search_random_response):
+    def test_get_search_random_img_single(self, request_get_search_random_response):
         assert len(request_get_search_random_response.data['images']) == 1, \
             "Random search contains more than single image"
+
+    def test_get_search_random_img_param_amount(self, request_get_search_random_response):
+        assert len(request_get_search_random_response.data['images'][0]) == 16, \
+            'Amount of parameters is not 16'
 
 
 class TestCasesPositive:
@@ -33,9 +37,6 @@ class TestCasesPositive:
         content = response.json()
         assert content is not None
         assert len(content) == 1  # Do we need to check length of content?
-
-        assert len(content['images']) == 1
-        assert len(content['images'][0]) == 16
 
         assert isinstance(content['images'][0]['signature'], str)
         assert isinstance(content['images'][0]['extension'], str)
