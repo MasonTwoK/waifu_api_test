@@ -45,10 +45,12 @@ def request_get_tags_query_full_wrong_response(request, info='Wrong'):
     yield request
 
 
-@pytest.fixture()
+@pytest.fixture(scope="class")
 def request_get_search_random_response(request):
-    response = requests.get(url='https://api.waifu.im/search')
+    response = requests.get(url='https://api.waifu.im/search', headers=headers)
+
     request.status_code = response.status_code
     request.data = response.json()
+
     yield request
 
