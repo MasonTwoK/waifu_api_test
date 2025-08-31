@@ -188,6 +188,6 @@ class TestGetTagsErrorCodes:
 @pytest.mark.xfail(reason="Чому так, воно видає помилку? Проблема порядку?")
 @pytest.mark.tags
 @pytest.mark.positive
-def test_get_tags_contains_maid_and_oppai(self, request_get_tags_response):
+def test_get_tags_contains_maid_and_oppai(request_get_tags_response):
     assert ['maid', 'oppai'] in request_get_tags_response.data['versatile'], \
         'maid & oppai tags are not present in versatile group'
