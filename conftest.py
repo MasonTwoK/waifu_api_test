@@ -1,8 +1,13 @@
 import pytest
 import requests
 import os
+from dotenv import load_dotenv
 
-headers = {'x-geo-blocking-bypass': os.getenv('x-geo-blocking-bypass')}
+load_dotenv()
+headers = {
+    'x-geo-blocking-bypass': os.getenv('X-GEO-BLOCKING-BYPASS'),
+    'Authorization': os.environ['AUTH_TOKEN']
+}
 
 
 @pytest.fixture(scope="class")
