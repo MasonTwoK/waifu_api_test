@@ -4,9 +4,6 @@ import pytest
 import requests
 import os
 from utils import tag_randomizer, tags_comparer
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 url = "https://api.waifu.im/search"
