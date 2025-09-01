@@ -56,6 +56,7 @@ def request_get_search_random_response(request):
 
     request.status_code = response.status_code
     request.data = response.json()
+    request.image = response.json()['images'][0]
 
     yield request
 
