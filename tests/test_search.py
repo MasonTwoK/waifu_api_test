@@ -28,9 +28,10 @@ class TestGetSearch:
         assert len(request_get_search_random_response.data['images'][0]) == 16, \
             'Amount of parameters is not 16'
 
-    @pytest.mark.parametrize("field_name", "data_type", [search_random_fields_name])
+    @pytest.mark.parametrize("field_name, data_type", search_random_fields_name)
     def test_get_search_random_img_fields_data_type(self, request_get_search_random_response, field_name, data_type):
-        assert isinstance(request_get_search_random_response.data['images'][0][field_name], data_type)
+        assert isinstance(request_get_search_random_response.data['images'][0][field_name], data_type), \
+            f"Property '{field_name}' data type is not {data_type}"
 
 
 class TestCasesPositive:
@@ -38,20 +39,6 @@ class TestCasesPositive:
 
         response = requests.get(url=url, headers=headers)
         content = response.json()
-
-        assert isinstance(content['images'][0]['signature'], str)
-        assert isinstance(content['images'][0]['extension'], str)
-        assert isinstance(content['images'][0]['image_id'], int)
-        assert isinstance(content['images'][0]['favorites'], int)
-        assert isinstance(content['images'][0]['dominant_color'], str)
-
-        assert isinstance(content['images'][0]['uploaded_at'], str)
-        assert isinstance(content['images'][0]['is_nsfw'], bool)
-        assert isinstance(content['images'][0]['width'], int)
-        assert isinstance(content['images'][0]['height'], int)
-        assert isinstance(content['images'][0]['byte_size'], int)
-        assert isinstance(content['images'][0]['url'], str)
-        assert isinstance(content['images'][0]['preview_url'], str)
 
         # TODO: Need to investigate behaviour below..
         assert isinstance(content['images'][0]['source'], str) or content['images'][0]['source'] is None
