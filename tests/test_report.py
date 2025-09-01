@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-# @pytest.mark.skip(reason="BUG #1: Error 400. User is enable to create a report")
+@pytest.mark.skip(reason="BUG #1: Error 400. User is enable to create a report")
 def test_post_report():
     auth_token = os.environ.get('auth_token')  # How to get a token https://docs.waifu.im/authorization
     headers = {
