@@ -4,7 +4,7 @@ import pytest
 import requests
 import os
 from utils import tag_randomizer, tags_comparer
-from data import search_random_fields_name
+from data import search_random_fields_name, search_random_fields_name_or_none
 
 
 url = "https://api.waifu.im/search"
@@ -25,13 +25,21 @@ class TestGetSearch:
             "Random search contains more than single image"
 
     def test_get_search_random_img_param_amount(self, request_get_search_random_response):
-        assert len(request_get_search_random_response.data['images'][0]) == 16, \
+        assert len(request_get_search_random_response.image) == 16, \
             'Amount of parameters is not 16'
 
     @pytest.mark.parametrize("field_name, data_type", search_random_fields_name)
     def test_get_search_random_img_fields_data_type(self, request_get_search_random_response, field_name, data_type):
-        assert isinstance(request_get_search_random_response.data['images'][0][field_name], data_type), \
+        assert isinstance(request_get_search_random_response.image[field_name], data_type), \
             f"Property '{field_name}' data type is not {data_type}"
+
+    @pytest.mark.parametrize("field_name, data_type", search_random_fields_name_or_none)
+    def test_get_search_random_img_fields_data_type_or_none(self, request_get_search_random_response,
+                                                            field_name, data_type):
+        assert (
+                isinstance(request_get_search_random_response.image[field_name], data_type) or
+                request_get_search_random_response.image[field_name] is None
+        )
 
 
 class TestCasesPositive:

@@ -208,3 +208,9 @@ search_random_fields_name = [
     pytest.param('byte_size', int, id='byte_size'),
     pytest.param('is_nsfw', bool, id='is_nsfw')
 ]
+
+search_random_fields_name_or_none = [
+    pytest.param('source', str, id='source'),
+    pytest.param('artist', dict, id='artist'),
+    pytest.param('liked_at', str, id='liked_at')
+]
