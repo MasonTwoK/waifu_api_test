@@ -4,10 +4,12 @@ import pytest
 import requests
 import os
 from utils import tag_randomizer, tags_comparer
+from data import search_random_fields_name
 
 
 url = "https://api.waifu.im/search"
 auth_token = os.environ['AUTH_TOKEN']  # How to get a token https://docs.waifu.im/authorization
+headers = {'Authorization': auth_token}
 
 
 class TestGetSearch:
@@ -26,15 +28,15 @@ class TestGetSearch:
         assert len(request_get_search_random_response.data['images'][0]) == 16, \
             'Amount of parameters is not 16'
 
+    @pytest.mark.parametrize("field_name", "data_type", [search_random_fields_name])
+    def test_get_search_random_img_fields_data_type(self, request_get_search_random_response, field_name, data_type):
+        assert isinstance(request_get_search_random_response.data['images'][0][field_name], data_type)
+
 
 class TestCasesPositive:
     def test_get_search_random(self):
 
-        headers = {'Authorization': auth_token}
-
         response = requests.get(url=url, headers=headers)
-        assert response.status_code == 200
-
         content = response.json()
 
         assert isinstance(content['images'][0]['signature'], str)
@@ -42,12 +44,8 @@ class TestCasesPositive:
         assert isinstance(content['images'][0]['image_id'], int)
         assert isinstance(content['images'][0]['favorites'], int)
         assert isinstance(content['images'][0]['dominant_color'], str)
-        assert isinstance(content['images'][0]['source'], str) or content['images'][0]['source'] is None
-        # TODO: Need to investigate behaviour below..
-        assert isinstance(content['images'][0]['artist'], dict) or content['images'][0]['artist'] is None
+
         assert isinstance(content['images'][0]['uploaded_at'], str)
-        # TODO: Need to investigate behaviour below..
-        assert (content['images'][0]['liked_at'] is None) or (isinstance(content['images'][0]['liked_at'], str))
         assert isinstance(content['images'][0]['is_nsfw'], bool)
         assert isinstance(content['images'][0]['width'], int)
         assert isinstance(content['images'][0]['height'], int)
@@ -55,8 +53,12 @@ class TestCasesPositive:
         assert isinstance(content['images'][0]['url'], str)
         assert isinstance(content['images'][0]['preview_url'], str)
 
+        # TODO: Need to investigate behaviour below..
+        assert isinstance(content['images'][0]['source'], str) or content['images'][0]['source'] is None
+        assert isinstance(content['images'][0]['artist'], dict) or content['images'][0]['artist'] is None
+        assert (content['images'][0]['liked_at'] is None) or (isinstance(content['images'][0]['liked_at'], str))
+
     def test_search_is_nsfw_false_by_default(self):
-        headers = {'Authorization': auth_token}
 
         for test in range(5):
             response = requests.get(url=url, headers=headers)
@@ -68,7 +70,6 @@ class TestCasesPositive:
     def test_get_search_single_tag_included(self):
         random_tag = tag_randomizer()
 
-        headers = {'Authorization': auth_token}
         response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag}", headers=headers)
         assert response.status_code == 200
 
@@ -87,25 +88,22 @@ class TestCasesPositive:
         assert tags_comparer(random_tag_1, content)
         assert tags_comparer(random_tag_2, content)
 
-    @pytest.mark.skip(reason='Need to be fixed')
+    @pytest.mark.skip(reason='BUG #5: Need to be fixed')
     def test_get_search_single_tag_excluded(self):
         random_tag = tag_randomizer()
 
-        headers = {'Authorization': auth_token}
         response = requests.get(url=f'https://api.waifu.im/search/?{random_tag}', headers=headers)
         assert response.status_code == 200, 'Wrong status code'
 
         content = response.json()
         assert not tags_comparer(tag=random_tag, content=content), 'Image returned with excluded tag.'
 
-    @pytest.mark.skip(reason='Fails time to time. Need to be fixed')
+    @pytest.mark.skip(reason='BUG #6: Fails time to time. Need to be fixed')
     def test_get_search_multiple_tag_excluded(self):
         random_tag_1 = tag_randomizer()
         random_tag_2 = tag_randomizer()
 
-        header = {'Authorization': auth_token}
-
-        response = requests.get(url=f"{url}/?excluded_tags={random_tag_1}&{random_tag_2}", headers=header)
+        response = requests.get(url=f"{url}/?excluded_tags={random_tag_1}&{random_tag_2}", headers=headers)
         assert response.status_code == 200
 
         content = response.json()

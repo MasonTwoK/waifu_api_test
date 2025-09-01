@@ -193,3 +193,18 @@ tag_full_info_tag_is_nsfw_states = [
     pytest.param('uniform', False, id='uniform'),
     pytest.param('kamisato-ayaka', False, id='kamisato-ayaka'),
 ]
+
+search_random_fields_name = [
+    pytest.param('signature', str, id='signature'),
+    pytest.param('extension', str, id='extension'),
+    pytest.param('dominant_color', str, id='dominant_color'),
+    pytest.param('uploaded_at', str, id='uploaded_at'),
+    pytest.param('url', str, id='url'),
+    pytest.param('preview_url', str, id='preview_url'),
+    pytest.param('image_id', int, id='image_id'),
+    pytest.param('favorites', int, id='favorites'),
+    pytest.param('width', int, id='width'),
+    pytest.param('height', int, id='height'),
+    pytest.param('byte_size', int, id='byte_size'),
+    pytest.param('is_nsfw', bool, id='is_nsfw')
+]
