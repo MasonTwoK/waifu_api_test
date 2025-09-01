@@ -37,31 +37,16 @@ class TestGetSearch:
     def test_get_search_random_img_fields_data_type_or_none(self, request_get_search_random_response,
                                                             field_name, data_type):
         assert (
-                isinstance(request_get_search_random_response.image[field_name], data_type) or
-                request_get_search_random_response.image[field_name] is None
+            # TODO: Need to investigate behaviour below..
+            isinstance(request_get_search_random_response.image[field_name], data_type) or
+            request_get_search_random_response.image[field_name] is None
         )
+
+    def test_get_search_random_img_param_is_nsfw_default(self, request_get_search_random_response):
+        assert request_get_search_random_response.image['is_nsfw'] is False, "Image is not nsfw"
 
 
 class TestCasesPositive:
-    def test_get_search_random(self):
-
-        response = requests.get(url=url, headers=headers)
-        content = response.json()
-
-        # TODO: Need to investigate behaviour below..
-        assert isinstance(content['images'][0]['source'], str) or content['images'][0]['source'] is None
-        assert isinstance(content['images'][0]['artist'], dict) or content['images'][0]['artist'] is None
-        assert (content['images'][0]['liked_at'] is None) or (isinstance(content['images'][0]['liked_at'], str))
-
-    def test_search_is_nsfw_false_by_default(self):
-
-        for test in range(5):
-            response = requests.get(url=url, headers=headers)
-            assert response.status_code == 200
-
-            content = response.json()
-            assert content['images'][0]['is_nsfw'] is False
-
     def test_get_search_single_tag_included(self):
         random_tag = tag_randomizer()
 
