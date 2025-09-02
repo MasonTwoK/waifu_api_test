@@ -2,6 +2,7 @@ import requests
 import random
 from data import nsfw_tags, versatile_tags
 
+
 # def tag_contains(searched_tag, list_of_tags):
 #     for tag in list_of_tags:
 #         if tag == searched_tag:
@@ -110,3 +111,11 @@ def tags_comparer(tag, content):
         if element['name'] == tag:
             return True
     return False
+
+
+def search_data_type_checker(img_field, data_type, possible_none=False):
+    if possible_none:
+        # TODO: Need to investigate behaviour below..
+        return isinstance(img_field, data_type) or img_field is None
+    else:
+        return isinstance(img_field, data_type)
