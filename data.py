@@ -206,7 +206,8 @@ search_random_fields_name = [
     pytest.param('width', int, id='width'),
     pytest.param('height', int, id='height'),
     pytest.param('byte_size', int, id='byte_size'),
-    pytest.param('is_nsfw', bool, id='is_nsfw')
+    pytest.param('is_nsfw', bool, id='is_nsfw'),
+    pytest.param('tags', list, id='tags')
 ]
 
 search_random_fields_name_or_none = [
