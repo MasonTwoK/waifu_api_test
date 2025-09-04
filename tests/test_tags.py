@@ -22,17 +22,20 @@ class TestGetTags:
 
     @pytest.mark.tags
     @pytest.mark.positive
+    @pytest.mark.response_body
     def test_get_tags_groups_amount(self, request_get_tags):
         assert len(request_get_tags.data) == 2, 'Tags group amount is wrong'
 
     @pytest.mark.tags
     @pytest.mark.positive
+    @pytest.mark.response_body
     @pytest.mark.parametrize("group_name", tags_groups)
     def test_get_tags_groups_presence(self, request_get_tags, group_name):
         assert group_name in request_get_tags.data, f'{group_name} tags group is missing'
 
     @pytest.mark.tags
     @pytest.mark.positive
+    @pytest.mark.response_body
     @pytest.mark.parametrize("group_name, amount", tags_in_group_amount)
     def test_get_tags_in_group_amount(self, request_get_tags, group_name, amount):
         assert len(request_get_tags.data[group_name]) == amount, \
@@ -40,6 +43,7 @@ class TestGetTags:
 
     @pytest.mark.tags
     @pytest.mark.positive
+    @pytest.mark.response_body
     @pytest.mark.parametrize("versatile_tag", versatile_tags)
     def test_get_tags_contains_versatile_tags(self, request_get_tags, versatile_tag):
         assert versatile_tag in request_get_tags.data['versatile'], \
@@ -47,6 +51,7 @@ class TestGetTags:
 
     @pytest.mark.tags
     @pytest.mark.positive
+    @pytest.mark.response_body
     @pytest.mark.parametrize("nsfw_tag", nsfw_tags)
     def test_get_tags_contains_nsfw_tags(self, request_get_tags, nsfw_tag):
         assert nsfw_tag in request_get_tags.data['nsfw'], f'{nsfw_tag} tag is not present in nsfw group'

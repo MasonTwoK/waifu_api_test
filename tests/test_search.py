@@ -22,38 +22,58 @@ class TestGetSearch:
     def test_get_search_random_img_status_code(self, request_get_search_random):
         assert request_get_search_random.status_code == 200, "Status code is not 200"
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     def test_search_random_img_property_single(self, request_get_search_random):
-        assert len(request_get_search_random.data) == 1, \
-            'Response data contains only one name value pair'
+        assert len(request_get_search_random.data) == 1, 'Response data contains only one name value pair'
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     def test_get_search_random_img_single(self, request_get_search_random):
-        assert len(request_get_search_random.data['images']) == 1, \
-            "Random search contains more than single image"
+        assert len(request_get_search_random.data['images']) == 1, "Random search contains more than single image"
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     def test_get_search_random_img_param_amount(self, request_get_search_random):
-        assert len(request_get_search_random.image) == 16, \
-            'Amount of parameters is not 16'
+        assert len(request_get_search_random.image) == 16, 'Amount of parameters is not 16'
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     @pytest.mark.parametrize("field_name, data_type", search_random_fields_name)
     def test_get_search_random_img_fields_data_type(self, request_get_search_random, field_name, data_type):
         assert search_data_type_checker(request_get_search_random.image[field_name], data_type), \
             f"Property '{field_name}' data type is not {data_type}"
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     @pytest.mark.parametrize("field_name, data_type", search_random_fields_name_or_none)
-    def test_get_search_random_img_fields_data_type_or_none(self, request_get_search_random,
-                                                            field_name, data_type):
+    def test_get_search_random_img_fields_data_type_or_none(self, request_get_search_random, field_name, data_type):
         assert search_data_type_checker(
             request_get_search_random.image[field_name], data_type, possible_none=True), \
             f"Property '{field_name}' data type is not {data_type}"
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     def test_get_search_random_img_param_is_nsfw_default(self, request_get_search_random):
         assert request_get_search_random.image['is_nsfw'] is False, "Image is not nsfw"
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     @pytest.mark.parametrize("field_name, data_type", search_random_fields_name_tags)
     def test_search_random_img_fields_name_tags_data_type(self, request_get_search_random, field_name, data_type):
         assert search_data_type_checker(request_get_search_random.image_tag_info[field_name], data_type), \
             f"Tag property '{field_name}' data type is not {data_type}"
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
     def test_get_search_random_img_field_tags_param_is_nsfw_false(self, request_get_search_random):
         assert request_get_search_random.image_tag_info['is_nsfw'] is False, "Parameter is_nsfw is not False by default"
 
