@@ -215,3 +215,10 @@ search_random_fields_name_or_none = [
     pytest.param('artist', dict, id='artist'),
     pytest.param('liked_at', str, id='liked_at')
 ]
+
+search_random_fields_name_tags = [
+    pytest.param('tag_id', int, id='tag_id'),
+    pytest.param('name', str, id='name'),
+    pytest.param('description', str, id='description'),
+    pytest.param('is_nsfw', bool, id='is_nsfw'),
+]

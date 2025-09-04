@@ -4,7 +4,7 @@ import pytest
 import requests
 import os
 from utils import tag_randomizer, tags_comparer, search_data_type_checker
-from data import search_random_fields_name, search_random_fields_name_or_none
+from data import search_random_fields_name, search_random_fields_name_or_none, search_random_fields_name_tags
 
 
 url = "https://api.waifu.im/search"
@@ -42,6 +42,11 @@ class TestGetSearch:
 
     def test_get_search_random_img_param_is_nsfw_default(self, request_get_search_random):
         assert request_get_search_random.image['is_nsfw'] is False, "Image is not nsfw"
+
+    @pytest.mark.parametrize("field_name, data_type", search_random_fields_name_tags)
+    def test_search_random_img_fields_name_tags_data_type(self, request_get_search_random, field_name, data_type):
+        assert search_data_type_checker(request_get_search_random.image_tag_info[field_name], data_type), \
+            f"Tag property '{field_name}' data type is not {data_type}"
 
 
 class TestCasesPositive:
