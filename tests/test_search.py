@@ -15,6 +15,10 @@ headers = {'Authorization': auth_token}
 @pytest.mark.search
 @pytest.mark.positive
 class TestGetSearch:
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.status_code
     def test_get_search_random_img_status_code(self, request_get_search_random):
         assert request_get_search_random.status_code == 200, "Status code is not 200"
 
