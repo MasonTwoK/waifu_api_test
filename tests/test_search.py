@@ -12,6 +12,8 @@ auth_token = os.environ['AUTH_TOKEN']  # How to get a token https://docs.waifu.i
 headers = {'Authorization': auth_token}
 
 
+@pytest.mark.search
+@pytest.mark.positive
 class TestGetSearch:
     def test_get_search_random_img_status_code(self, request_get_search_random):
         assert request_get_search_random.status_code == 200, "Status code is not 200"
@@ -47,6 +49,9 @@ class TestGetSearch:
     def test_search_random_img_fields_name_tags_data_type(self, request_get_search_random, field_name, data_type):
         assert search_data_type_checker(request_get_search_random.image_tag_info[field_name], data_type), \
             f"Tag property '{field_name}' data type is not {data_type}"
+
+    def test_get_search_random_img_field_tags_param_is_nsfw_false(self, request_get_search_random):
+        assert request_get_search_random.image_tag_info['is_nsfw'] is False, "Parameter is_nsfw is not False by default"
 
 
 class TestCasesPositive:
