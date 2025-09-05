@@ -78,6 +78,24 @@ class TestGetSearch:
         assert request_get_search_random.image_tag_info['is_nsfw'] is False, "Parameter is_nsfw is not False by default"
 
 
+@pytest.mark.search
+@pytest.mark.positive
+@pytest.mark.search_query_params
+class TestGetSearchQueryParamFull:
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.status_code
+    def test_get_search_query_full_false_status_code(self, request_get_search_query_full_false):
+        assert request_get_search_query_full_false.status_code == 200, "Status code is not 200"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_get_search_query_full_false_is_nsfw_param(self, request_get_search_query_full_false):
+        assert request_get_search_query_full_false.image['is_nsfw'] is False, f"Image parameter is_nsfw is not False"
+
+
 class TestCasesPositive:
     def test_get_search_single_tag_included(self):
         random_tag = tag_randomizer()
