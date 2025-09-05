@@ -59,7 +59,7 @@ class TestGetTags:
 
 @pytest.mark.tags
 @pytest.mark.positive
-class TestGetTagsQueryParamFullFalse:
+class TestGetTagsQueryFullFalse:
 
     @pytest.mark.tags
     @pytest.mark.positive
@@ -109,7 +109,7 @@ class TestGetTagsQueryParamFullFalse:
 
 @pytest.mark.tags
 @pytest.mark.positive
-class TestGetTagsQueryParamFullTrue:
+class TestGetTagsQueryFullTrue:
 
     @pytest.mark.tags
     @pytest.mark.positive

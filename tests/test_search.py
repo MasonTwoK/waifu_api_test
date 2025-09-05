@@ -81,8 +81,8 @@ class TestGetSearchRandom:
 
 @pytest.mark.search
 @pytest.mark.positive
-@pytest.mark.search_query_params
-class TestGetSearchQueryParamFull:
+@pytest.mark.search_query_full
+class TestGetSearchQueryFullFalse:
 
     @pytest.mark.search
     @pytest.mark.positive
