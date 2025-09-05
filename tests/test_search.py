@@ -14,7 +14,8 @@ headers = {'Authorization': auth_token}
 
 @pytest.mark.search
 @pytest.mark.positive
-class TestGetSearch:
+@pytest.mark.search_random
+class TestGetSearchRandom:
 
     @pytest.mark.search
     @pytest.mark.positive
