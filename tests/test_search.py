@@ -94,7 +94,14 @@ class TestGetSearchQueryFullFalse:
     @pytest.mark.positive
     @pytest.mark.response_body
     def test_get_search_query_full_false_is_nsfw_param(self, request_get_search_query_full_false):
-        assert request_get_search_query_full_false.image['is_nsfw'] is False, f"Image parameter is_nsfw is not False"
+        assert request_get_search_query_full_false.image['is_nsfw'] is False, "Image parameter is_nsfw is not False"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_get_search_query_full_false_field_tags_param_is_nsfw_false(self, request_get_search_query_full_false):
+        assert request_get_search_query_full_false.image_tag_info['is_nsfw'] is False, \
+            "Parameter is_nsfw in tags field is not False"
 
 
 class TestCasesPositive:

@@ -69,6 +69,7 @@ def request_get_search_query_full_false(request, is_nsfw=False):
     request.status_code = response.status_code
     request.data = response.json()
     request.image = response.json()['images'][0]
+    request.image_tag_info = response.json()['images'][0]['tags'][0]
 
     yield request
 
