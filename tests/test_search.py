@@ -118,7 +118,7 @@ class TestGetSearchQueryFullTrue:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_get_search_query_full_true_is_nsfw_param(self, request_get_search_query_full_true):
+    def test_get_search_query_full_true_param(self, request_get_search_query_full_true):
         assert request_get_search_query_full_true.image['is_nsfw'] is True, "Image parameter is_nsfw is not True"
 
 
