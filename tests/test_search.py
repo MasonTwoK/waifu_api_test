@@ -130,8 +130,8 @@ class TestGetSearchQueryGifFalse:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_search_gif_false_status_code(self, request_get_search_gif_false):
-        assert request_get_search_gif_false.status_code == 200, "Status code is not 200"
+    def test_search_query_gif_false_status_code(self, request_get_search_query_gif_false):
+        assert request_get_search_query_gif_false.status_code == 200, "Status code is not 200"
 
     @pytest.mark.search
     @pytest.mark.positive

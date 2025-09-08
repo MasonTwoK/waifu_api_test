@@ -87,7 +87,7 @@ def request_get_search_query_full_true(request, is_nsfw=True):
 
 
 @pytest.fixture(scope="class")
-def request_get_search_gif_false(request, gif=False):
+def request_get_search_query_gif_false(request, gif=False):
     response = requests.get(url=f"https://api.waifu.im/search?gif={gif}", headers=headers)
 
     request.status_code = response.status_code
