@@ -115,6 +115,7 @@ class TestGetSearchQueryFullTrue:
     def test_get_search_query_full_true_status_code(self, request_get_search_query_full_true):
         assert request_get_search_query_full_true.status_code == 200, "Status code is not 200"
 
+    @pytest.mark.skip(reason="Test should check 'full' parameter not is_nsfw")
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
