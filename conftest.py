@@ -94,3 +94,13 @@ def request_get_search_query_gif_false(request, gif=False):
     request.image_extension = response.json()['images'][0]['extension']
 
     yield request
+
+
+@pytest.fixture(scope='class')
+def request_get_search_query_gif_true(request, gif=True):
+    response = requests.get(url=f'https://api.waifu.im/search?gif={gif}', headers=headers)
+
+    request.status_code = response.status_code
+    request.image_extension = response.json()['images'][0]['extension']
+
+    yield request

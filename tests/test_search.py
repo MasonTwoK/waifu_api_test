@@ -136,8 +136,25 @@ class TestGetSearchQueryGifFalse:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_search_gif_false_param(self, request_get_search_gif_false):
-        assert request_get_search_gif_false.image_extension != '.gif', "Extension parameter is .gif"
+    def test_search_query_gif_false_param(self, request_get_search_query_gif_false):
+        assert request_get_search_query_gif_false.image_extension != '.gif', "Extension parameter is .gif"
+
+
+@pytest.mark.search
+@pytest.mark.positive
+@pytest.mark.search_query_gif
+class TestGetSearchQueryGifTrue:
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.status_code
+    def test_search_gif_true_status_code(self, request_get_search_query_gif_true):
+        assert request_get_search_query_gif_true.status_code == 200, 'Status code is not 200'
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_search_query_gif_true_param(self, request_get_search_query_gif_true):
+        assert request_get_search_query_gif_true.image_extension == '.gif', "Image extension is not equal .gif"
 
 
 class TestCasesPositive:
