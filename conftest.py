@@ -62,7 +62,7 @@ def request_get_search_random(request):
     yield request
 
 
-@pytest.fixture()
+@pytest.fixture(scope="class")
 def request_get_search_query_full_false(request, is_nsfw=False):
     response = requests.get(url=f"https://api.waifu.im/search?is_nsfw={is_nsfw}", headers=headers)
 
@@ -74,7 +74,7 @@ def request_get_search_query_full_false(request, is_nsfw=False):
     yield request
 
 
-@pytest.fixture()
+@pytest.fixture(scope="class")
 def request_get_search_query_full_true(request, is_nsfw=True):
     response = requests.get(url=f"https://api.waifu.im/search?is_nsfw={is_nsfw}", headers=headers)
 
