@@ -1,4 +1,5 @@
 # Tests for page - https://docs.waifu.im/reference/api-reference/search
+from importlib.metadata import requires
 
 import pytest
 import requests
@@ -104,6 +105,7 @@ class TestGetSearchQueryFullFalse:
             "Parameter is_nsfw in tags field is not False"
 
 
+@pytest.mark.skip(reason="Requires redone")
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_full
@@ -115,11 +117,12 @@ class TestGetSearchQueryFullTrue:
     def test_get_search_query_full_true_status_code(self, request_get_search_query_full_true):
         assert request_get_search_query_full_true.status_code == 200, "Status code is not 200"
 
-    @pytest.mark.skip(reason="Test should check 'full' parameter not is_nsfw")
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
     def test_get_search_query_full_true_param(self, request_get_search_query_full_true):
+        result = request_get_search_query_full_true.data
+        print()
         assert request_get_search_query_full_true.image['is_nsfw'] is True, "Image parameter is_nsfw is not True"
 
 

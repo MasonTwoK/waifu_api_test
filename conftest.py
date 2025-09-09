@@ -63,8 +63,8 @@ def request_get_search_random(request):
 
 
 @pytest.fixture(scope="class")
-def request_get_search_query_full_false(request, is_nsfw=False):
-    response = requests.get(url=f"https://api.waifu.im/search?is_nsfw={is_nsfw}", headers=headers)
+def request_get_search_query_full_false(request, full=False):
+    response = requests.get(url=f"https://api.waifu.im/search?full={full}", headers=headers)
 
     request.status_code = response.status_code
     request.data = response.json()
@@ -75,13 +75,12 @@ def request_get_search_query_full_false(request, is_nsfw=False):
 
 
 @pytest.fixture(scope="class")
-def request_get_search_query_full_true(request, is_nsfw=True):
-    response = requests.get(url=f"https://api.waifu.im/search?is_nsfw={is_nsfw}", headers=headers)
+def request_get_search_query_full_true(request, full=True):
+    response = requests.get(url=f"https://api.waifu.im/search?full={full}", headers=headers)
 
     request.status_code = response.status_code
     request.data = response.json()
     request.image = response.json()['images'][0]
-    request.image_tag_info = response.json()['images'][0]['tags'][0]
 
     yield request
 
