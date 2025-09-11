@@ -82,25 +82,26 @@ class TestGetSearchRandom:
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_full
+@pytest.mark.query_param('False')
 class TestGetSearchQueryFullFalse:
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_get_search_query_full_false_status_code(self, request_get_search_query_full_false):
-        assert request_get_search_query_full_false.status_code == 200, "Status code is not 200"
+    def test_get_search_query_full_false_status_code(self, request_get_search_query_full):
+        assert request_get_search_query_full.status_code == 200, "Status code is not 200"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_get_search_query_full_false_is_nsfw_param(self, request_get_search_query_full_false):
-        assert request_get_search_query_full_false.image['is_nsfw'] is False, "Image parameter is_nsfw is not False"
+    def test_get_search_query_full_false_is_nsfw_param(self, request_get_search_query_full):
+        assert request_get_search_query_full.image['is_nsfw'] is False, "Image parameter is_nsfw is not False"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_get_search_query_full_false_field_tags_param_is_nsfw_false(self, request_get_search_query_full_false):
-        assert request_get_search_query_full_false.image_tag_info['is_nsfw'] is False, \
+    def test_get_search_query_full_false_field_tags_param_is_nsfw_false(self, request_get_search_query_full):
+        assert request_get_search_query_full.image_tag_info['is_nsfw'] is False, \
             "Parameter is_nsfw in tags field is not False"
 
 
@@ -108,25 +109,26 @@ class TestGetSearchQueryFullFalse:
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_full
+@pytest.mark.query_param('True')
 class TestGetSearchQueryFullTrue:
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_get_search_query_full_true_status_code(self, request_get_search_query_full_true):
-        assert request_get_search_query_full_true.status_code == 200, "Status code is not 200"
+    def test_get_search_query_full_true_status_code(self, request_get_search_query_full):
+        assert request_get_search_query_full.status_code == 200, "Status code is not 200"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_get_search_query_full_true_param(self, request_get_search_query_full_true):
-        assert request_get_search_query_full_true.image['is_nsfw'] is True, "Image parameter is_nsfw is not True"
+    def test_get_search_query_full_true_param(self, request_get_search_query_full):
+        assert request_get_search_query_full.image['is_nsfw'] is True, "Image parameter is_nsfw is not True"
 
 
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_gif
-@pytest.mark.query_gif('False')
+@pytest.mark.query_param('False')
 class TestGetSearchQueryGifFalse:
     @pytest.mark.search
     @pytest.mark.positive
@@ -144,7 +146,7 @@ class TestGetSearchQueryGifFalse:
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_gif
-@pytest.mark.query_gif('True')
+@pytest.mark.query_param('True')
 class TestGetSearchQueryGifTrue:
     @pytest.mark.search
     @pytest.mark.positive
