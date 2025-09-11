@@ -1,5 +1,4 @@
 # Tests for page - https://docs.waifu.im/reference/api-reference/search
-from importlib.metadata import requires
 
 import pytest
 import requests
@@ -121,43 +120,43 @@ class TestGetSearchQueryFullTrue:
     @pytest.mark.positive
     @pytest.mark.response_body
     def test_get_search_query_full_true_param(self, request_get_search_query_full_true):
-        result = request_get_search_query_full_true.data
-        print()
         assert request_get_search_query_full_true.image['is_nsfw'] is True, "Image parameter is_nsfw is not True"
 
 
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_gif
+@pytest.mark.query_gif('False')
 class TestGetSearchQueryGifFalse:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_search_query_gif_false_status_code(self, request_get_search_query_gif_false):
-        assert request_get_search_query_gif_false.status_code == 200, "Status code is not 200"
+    def test_search_query_gif_false_status_code(self, request_get_search_query_gif):
+        assert request_get_search_query_gif.status_code == 200, "Status code is not 200"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_search_query_gif_false_param(self, request_get_search_query_gif_false):
-        assert request_get_search_query_gif_false.image_extension != '.gif', "Extension parameter is .gif"
+    def test_search_query_gif_false_param(self, request_get_search_query_gif):
+        assert request_get_search_query_gif.image_extension != '.gif', "Extension parameter is .gif"
 
 
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_gif
+@pytest.mark.query_gif('True')
 class TestGetSearchQueryGifTrue:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_search_gif_true_status_code(self, request_get_search_query_gif_true):
-        assert request_get_search_query_gif_true.status_code == 200, 'Status code is not 200'
+    def test_search_gif_true_status_code(self, request_get_search_query_gif):
+        assert request_get_search_query_gif.status_code == 200, 'Status code is not 200'
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_search_query_gif_true_param(self, request_get_search_query_gif_true):
-        assert request_get_search_query_gif_true.image_extension == '.gif', "Image extension is not equal .gif"
+    def test_search_query_gif_true_param(self, request_get_search_query_gif):
+        assert request_get_search_query_gif.image_extension == '.gif', "Image extension is not equal .gif"
 
 
 class TestCasesPositive:
