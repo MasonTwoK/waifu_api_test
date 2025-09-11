@@ -2,6 +2,7 @@ import pytest
 import requests
 import os
 from dotenv import load_dotenv
+from utils import query_bool_param_provider
 
 load_dotenv()
 headers = {
@@ -95,8 +96,9 @@ def request_get_search_query_gif_false(request, gif=False):
     yield request
 
 
-@pytest.fixture(scope='class')
-def request_get_search_query_gif_true(request, gif=True):
+@pytest.fixture(scope="class")
+def request_get_search_query_gif(request):
+    gif = query_bool_param_provider(request.node.get_closest_marker('query_gif').args[0])
     response = requests.get(url=f'https://api.waifu.im/search?gif={gif}', headers=headers)
 
     request.status_code = response.status_code

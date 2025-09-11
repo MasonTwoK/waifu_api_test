@@ -119,3 +119,11 @@ def search_data_type_checker(img_field, data_type, possible_none=False):
         return isinstance(img_field, data_type) or img_field is None
     else:
         return isinstance(img_field, data_type)
+
+
+def query_bool_param_provider(parameter):
+    if parameter == "True":
+        parameter = True
+    if parameter == "False":
+        parameter = False
+    return parameter
