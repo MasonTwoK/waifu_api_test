@@ -21,18 +21,8 @@ def request_get_tags(request):
 
 
 @pytest.fixture(scope="class")
-def request_get_tags_query_full_false(request, info=False):
-    response = requests.get(url=f"https://api.waifu.im/tags?full={info}", headers=headers)
-
-    request.status_code = response.status_code
-    request.data = response.json()
-
-    yield request
-
-
-# Чи можна прокинути зміну info= зі значеннями False/True, щоб юзати лише 1 метод?
-@pytest.fixture(scope="class")
-def request_get_tags_query_full_true(request, info=True):
+def request_get_tags_query_full(request):
+    info = query_bool_param_provider(parameter=request.node.get_closest_marker('query_param').args[0])
     response = requests.get(url=f"https://api.waifu.im/tags?full={info}", headers=headers)
 
     request.status_code = response.status_code
