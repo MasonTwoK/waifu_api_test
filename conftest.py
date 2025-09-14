@@ -42,6 +42,7 @@ def request_get_tags_query_full_wrong(request):
     yield request
 
 
+# TODO: Redo conftest methods which reach objects inside json() since in error code case this objects won`t initialize!
 @pytest.fixture(scope="class")
 def request_get_search_random(request):
     response = requests.get(url='https://api.waifu.im/search', headers=headers)
