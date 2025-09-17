@@ -31,17 +31,6 @@ def request_get_tags_query_full(request):
     yield request
 
 
-@pytest.fixture(scope="class")
-def request_get_tags_query_full_wrong(request):
-    info = 'Wrong'
-    response = requests.get(url=f"https://api.waifu.im/tags?full={info}", headers=headers)
-
-    request.status_code = response.status_code
-    request.data = response.json()
-
-    yield request
-
-
 # TODO: Redo conftest methods which reach objects inside json() since in error code case this objects won`t initialize!
 @pytest.fixture(scope="class")
 def request_get_search_random(request):

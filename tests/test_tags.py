@@ -191,21 +191,22 @@ class TestGetTagsQueryFullTrue:
             f"{tag_full_info['name']} tag has incorrect full info"
 
 
+@pytest.mark.query_param('wrong')
 @pytest.mark.tags
 @pytest.mark.negative
 class TestGetTagsErrorCodes:
     @pytest.mark.tags
     @pytest.mark.negative
     @pytest.mark.status_code
-    def test_get_tags_query_full_error_code_400(self, request_get_tags_query_full_wrong):
-        assert request_get_tags_query_full_wrong.status_code == 400, \
-            f"Status code {request_get_tags_query_full_wrong.status_code} is not 400"
+    def test_get_tags_query_full_error_code_400(self, request_get_tags_query_full):
+        assert request_get_tags_query_full.status_code == 400, \
+            f"Status code {request_get_tags_query_full.status_code} is not 400"
 
     @pytest.mark.tags
     @pytest.mark.negative
     @pytest.mark.response_body
-    def test_get_tags_query_full_error_code_400_details(self, request_get_tags_query_full_wrong):
-        assert (request_get_tags_query_full_wrong.data['detail'] ==
+    def test_get_tags_query_full_error_code_400_details(self, request_get_tags_query_full):
+        assert (request_get_tags_query_full.data['detail'] ==
                 'Bad Request, error on full, failed to bind field value to bool'), 'Detail message is wrong'
 
 
