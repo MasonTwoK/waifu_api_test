@@ -2,8 +2,12 @@ import pytest
 
 tags_groups = ['versatile', 'nsfw']
 nsfw_tags = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero']
-versatile_tags = ['maid', 'waifu', 'marin-kitagawa', 'mori-calliope', 'raiden-shogun',
-                  'oppai', 'selfies', 'uniform', 'kamisato-ayaka']
+
+versatile_tags = ['maid', 'waifu', 'marin-kitagawa', 'mori-calliope', 'raiden-shogun', 'oppai', 'selfies',
+                  'uniform', 'kamisato-ayaka']
+
+full_info_tag_names = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero', 'maid', 'waifu', 'marin-kitagawa',
+                       'mori-calliope', 'raiden-shogun', 'oppai', 'selfies', 'uniform', 'kamisato-ayaka']
 
 tags_in_group_amount = [
     pytest.param('versatile', 9, id='versatile'),
@@ -144,10 +148,6 @@ tag_full_info_tag_ids = [
     pytest.param('uniform', 11, id='uniform'),
     pytest.param('kamisato-ayaka', 17, id='kamisato-ayaka'),
 ]
-
-tag_full_info_tag_names = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero', 'maid', 'waifu',
-                           'marin-kitagawa', 'mori-calliope', 'raiden-shogun', 'oppai', 'selfies',
-                           'uniform', 'kamisato-ayaka']
 
 tag_full_info_tag_descriptions = [
     pytest.param('ass', 'Girls with a large butt. ', id='ass'),

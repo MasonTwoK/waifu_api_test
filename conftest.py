@@ -3,6 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from utils import query_bool_param_provider
+from data import full_info_tag_names
 
 load_dotenv()
 headers = {
@@ -40,6 +41,18 @@ def request_get_search_random(request):
     request.data = response.json()
     request.image = response.json()['images'][0]
     request.image_tag_info = response.json()['images'][0]['tags'][0]
+
+    yield request
+
+
+# The way of implementation https://docs.pytest.org/en/stable/how-to/fixtures.html#fixture-parametrize
+@pytest.fixture(params=full_info_tag_names)
+def request_get_search_query_included_tags(request):
+    tag_names = request.param
+    response = requests.get(url=f"https://api.waifu.im/search?included_tags={tag_names}", headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
 
     yield request
 

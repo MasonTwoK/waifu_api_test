@@ -6,7 +6,7 @@ from utils import (tag_full_info_provider, tag_full_info_comparer, tag_full_info
                    tag_full_info_tag_name_provider, tag_full_info_description_provider,
                    tag_full_info_is_nsfw_state_provider)
 from data import (tags_full_info, tags_groups, nsfw_tags, versatile_tags, tags_in_group_amount, tag_full_info_tag_ids,
-                  tag_full_info_tag_names, tag_full_info_tag_descriptions, tag_full_info_tag_is_nsfw_states)
+                  full_info_tag_names, tag_full_info_tag_descriptions, tag_full_info_tag_is_nsfw_states)
 
 
 @pytest.mark.tags
@@ -151,7 +151,7 @@ class TestGetTagsQueryFullTrue:
     @pytest.mark.tags
     @pytest.mark.positive
     @pytest.mark.response_body
-    @pytest.mark.parametrize("tag_name", tag_full_info_tag_names)
+    @pytest.mark.parametrize("tag_name", full_info_tag_names)
     def test_tags_query_full_true_contains_info_name(self, request_get_tags_query_full, tag_name):
         assert tag_full_info_tag_name_provider(request_get_tags_query_full.data, tag_name), \
             f"Tag name {tag_name} is not present in full info"
