@@ -90,6 +90,13 @@ class TestGetSearchQueryIncludedTags:
     def test_get_search_query_included_tags_status_code(self, request_get_search_query_included_tags):
         assert request_get_search_query_included_tags.status_code == 200, "Status code is not 200"
 
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_get_search_query_included_tags_body(self, request_get_search_query_included_tags):
+        assert tags_comparer(request_get_search_query_included_tags.tag_name, request_get_search_query_included_tags.data), \
+            f'Tag {request_get_search_query_included_tags.tag_name} is not present for image'
+
 
 @pytest.mark.search
 @pytest.mark.positive

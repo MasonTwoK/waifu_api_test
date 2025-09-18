@@ -46,13 +46,15 @@ def request_get_search_random(request):
 
 
 # The way of implementation https://docs.pytest.org/en/stable/how-to/fixtures.html#fixture-parametrize
-@pytest.fixture(params=full_info_tag_names)
+@pytest.fixture(scope="class", params=full_info_tag_names)
 def request_get_search_query_included_tags(request):
-    tag_names = request.param
-    response = requests.get(url=f"https://api.waifu.im/search?included_tags={tag_names}", headers=headers)
+    tag_name = request.param
+    response = requests.get(url=f"https://api.waifu.im/search?included_tags={tag_name}", headers=headers)
 
     request.status_code = response.status_code
     request.data = response.json()
+
+    request.tag_name = tag_name
 
     yield request
 
