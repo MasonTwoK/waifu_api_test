@@ -81,50 +81,14 @@ class TestGetSearchRandom:
 
 @pytest.mark.search
 @pytest.mark.positive
-@pytest.mark.search_query_full
-@pytest.mark.query_param('False')
-class TestGetSearchQueryFullFalse:
+@pytest.mark.search_query_included_tags
+class TestGetSearchQueryIncludedTags:
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_get_search_query_full_false_status_code(self, request_get_search_query_full):
-        assert request_get_search_query_full.status_code == 200, "Status code is not 200"
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.response_body
-    def test_get_search_query_full_false_is_nsfw_param(self, request_get_search_query_full):
-        assert request_get_search_query_full.image['is_nsfw'] is False, "Image parameter is_nsfw is not False"
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.response_body
-    def test_get_search_query_full_false_field_tags_param_is_nsfw_false(self, request_get_search_query_full):
-        assert request_get_search_query_full.image_tag_info['is_nsfw'] is False, \
-            "Parameter is_nsfw in tags field is not False"
-
-
-# TODO: Redo conftest methods which reach objects inside json() since in error code case this objects won`t initialize!
-@pytest.mark.skip(reason="To remove in negative scenarios section")
-@pytest.mark.search
-@pytest.mark.positive
-@pytest.mark.search_query_full
-@pytest.mark.query_param('True')
-class TestGetSearchQueryFullTrue:
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.status_code
-    def test_get_search_query_full_true_status_code(self, request_get_search_query_full):
-        assert request_get_search_query_full.status_code == 401, "Status code is not 401"
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.response_body
-    def test_get_search_query_full_true_param(self, request_get_search_query_full):
-        assert request_get_search_query_full.data['detail'] == "Missing or malformed token", \
-            "Image parameter is_nsfw is not True"
+    def test_get_search_query_included_tags_status_code(self, request_get_search_query_included_tags):
+        assert request_get_search_query_included_tags.status_code == 200, "Status code is not 200"
 
 
 @pytest.mark.search
@@ -203,21 +167,50 @@ class TestGetSearchQueryIsNsfwTrue:
 
 @pytest.mark.search
 @pytest.mark.positive
-@pytest.mark.search_query_is_nsfw
-@pytest.mark.query_param('false')
-class TestGetSearchQueryIsNsfwFalse:
+@pytest.mark.search_query_full
+@pytest.mark.query_param('False')
+class TestGetSearchQueryFullFalse:
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_get_search_is_nsfw_true_status_code(self, request_get_search_query_is_nsfw):
-        assert request_get_search_query_is_nsfw.status_code == 200, 'Status code is not 200'
+    def test_get_search_query_full_false_status_code(self, request_get_search_query_full):
+        assert request_get_search_query_full.status_code == 200, "Status code is not 200"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_get_search_is_nsfw_true(self, request_get_search_query_is_nsfw):
-        assert request_get_search_query_is_nsfw.image['is_nsfw'] is False, 'is_nsfw parameter is not False'
+    def test_get_search_query_full_false_is_nsfw_param(self, request_get_search_query_full):
+        assert request_get_search_query_full.image['is_nsfw'] is False, "Image parameter is_nsfw is not False"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_get_search_query_full_false_field_tags_param_is_nsfw_false(self, request_get_search_query_full):
+        assert request_get_search_query_full.image_tag_info['is_nsfw'] is False, \
+            "Parameter is_nsfw in tags field is not False"
+
+
+# TODO: Redo conftest methods which reach objects inside json() since in error code case this objects won`t initialize!
+@pytest.mark.skip(reason="To remove in negative scenarios section")
+@pytest.mark.search
+@pytest.mark.positive
+@pytest.mark.search_query_full
+@pytest.mark.query_param('True')
+class TestGetSearchQueryFullTrue:
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.status_code
+    def test_get_search_query_full_true_status_code(self, request_get_search_query_full):
+        assert request_get_search_query_full.status_code == 401, "Status code is not 401"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_get_search_query_full_true_param(self, request_get_search_query_full):
+        assert request_get_search_query_full.data['detail'] == "Missing or malformed token", \
+            "Image parameter is_nsfw is not True"
 
 
 class TestCasesPositive:
