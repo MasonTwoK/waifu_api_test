@@ -222,3 +222,9 @@ search_random_fields_name_tags = [
     pytest.param('description', str, id='description'),
     pytest.param('is_nsfw', bool, id='is_nsfw'),
 ]
+
+# https://docs.pytest.org/en/stable/how-to/fixtures.html#using-marks-with-parametrized-fixtures
+search_excluded_tags = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'ero', 'maid',
+                        pytest.param('waifu', marks=pytest.mark.xfail(reason="No response with out waifu tag")),
+                        'marin-kitagawa', 'mori-calliope', 'raiden-shogun', 'oppai', 'selfies',
+                        'uniform', 'kamisato-ayaka']

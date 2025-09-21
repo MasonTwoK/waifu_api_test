@@ -3,7 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from utils import query_bool_param_provider
-from data import full_info_tag_names
+from data import full_info_tag_names, search_excluded_tags
 
 load_dotenv()
 headers = {
@@ -50,6 +50,19 @@ def request_get_search_random(request):
 def request_get_search_query_included_tags(request):
     tag_name = request.param
     response = requests.get(url=f"https://api.waifu.im/search?included_tags={tag_name}", headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+
+    request.tag_name = tag_name
+
+    yield request
+
+
+@pytest.fixture(scope="class", params=search_excluded_tags)
+def request_get_search_query_excluded_tags(request):
+    tag_name = request.param
+    response = requests.get(url=f"https://api.waifu.im/search?excluded_tags={tag_name}", headers=headers)
 
     request.status_code = response.status_code
     request.data = response.json()

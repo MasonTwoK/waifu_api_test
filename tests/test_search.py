@@ -100,6 +100,25 @@ class TestGetSearchQueryIncludedTags:
 
 @pytest.mark.search
 @pytest.mark.positive
+@pytest.mark.search_query_excluded_tags
+class TestGetSearchQueryExcludedTags:
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.status_code
+    def test_get_search_query_excluded_tags_status_code(self, request_get_search_query_excluded_tags):
+        assert request_get_search_query_excluded_tags.status_code == 200, "Status code is not 200"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_get_search_query_excluded_tags_body(self, request_get_search_query_excluded_tags):
+        assert not tags_comparer(request_get_search_query_excluded_tags.tag_name,
+                                 request_get_search_query_excluded_tags.data), \
+            f"{request_get_search_query_excluded_tags.tag_name} is present in response"
+
+
+@pytest.mark.search
+@pytest.mark.positive
 @pytest.mark.search_query_gif
 @pytest.mark.query_param('False')
 class TestGetSearchQueryGifFalse:
