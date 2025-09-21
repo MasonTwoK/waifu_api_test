@@ -94,7 +94,8 @@ class TestGetSearchQueryIncludedTags:
     @pytest.mark.positive
     @pytest.mark.response_body
     def test_get_search_query_included_tags_body(self, request_get_search_query_included_tags):
-        assert tags_comparer(request_get_search_query_included_tags.tag_name, request_get_search_query_included_tags.data), \
+        assert tags_comparer(request_get_search_query_included_tags.tag_name,
+                             request_get_search_query_included_tags.data), \
             f'Tag {request_get_search_query_included_tags.tag_name} is not present for image'
 
 
