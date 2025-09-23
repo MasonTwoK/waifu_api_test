@@ -192,6 +192,11 @@ class TestGetSearchQueryIsNsfwTrue:
         assert request_get_search_query_is_nsfw.image['is_nsfw'] is True, 'is_nsfw parameter is not True'
 
 
+class TestGetSearchQueryOrientation:
+    def test_get_search_query_orientation_status_code(self, request_get_search_query_orientation):
+        assert request_get_search_query_orientation.status_code == 200, "Status code is not 200"
+
+
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_full

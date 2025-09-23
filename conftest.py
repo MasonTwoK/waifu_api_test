@@ -105,3 +105,14 @@ def request_get_search_query_is_nsfw(request):
     request.image = response.json()['images'][0]
 
     yield request
+
+
+@pytest.fixture(params=['PORTRAIT', 'LANDSCAPE', 'RANDOM'])
+def request_get_search_query_orientation(request):
+    orientation = request.param
+    response = requests.get(url=f'https://api.waifu.im/search?orientation={orientation}', headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+
+    yield request
