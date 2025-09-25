@@ -127,3 +127,14 @@ def query_bool_param_provider(parameter):
     if parameter == "False":
         parameter = False
     return parameter
+
+
+def search_orientation_provider(response_body):
+    if response_body['images'][0]['height'] > response_body['images'][0]['width']:
+        return ['PORTRAIT', 'RANDOM']
+    if response_body['images'][0]['height'] < response_body['images'][0]['width']:
+        return ['LANDSCAPE', 'RANDOM']
+    if response_body['images'][0]['height'] == response_body['images'][0]['width']:
+        return ['PORTRAIT', 'LANDSCAPE', 'RANDOM']
+    else:
+        return 0

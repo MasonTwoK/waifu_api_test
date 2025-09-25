@@ -3,7 +3,7 @@
 import pytest
 import requests
 import os
-from utils import tag_randomizer, tags_comparer, search_data_type_checker
+from utils import tag_randomizer, tags_comparer, search_data_type_checker, search_orientation_provider
 from data import search_random_fields_name, search_random_fields_name_or_none, search_random_fields_name_tags
 
 
@@ -192,9 +192,26 @@ class TestGetSearchQueryIsNsfwTrue:
         assert request_get_search_query_is_nsfw.image['is_nsfw'] is True, 'is_nsfw parameter is not True'
 
 
+@pytest.mark.search
+@pytest.mark.positive
+@pytest.mark.search_query_orientation
 class TestGetSearchQueryOrientation:
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_orientation
+    @pytest.mark.status_code
     def test_get_search_query_orientation_status_code(self, request_get_search_query_orientation):
         assert request_get_search_query_orientation.status_code == 200, "Status code is not 200"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_orientation
+    @pytest.mark.response_body
+    def test_get_search_query_orientation_body(self, request_get_search_query_orientation):
+        assert request_get_search_query_orientation.orientation in search_orientation_provider(
+            request_get_search_query_orientation.data), \
+            f"Picture is not {request_get_search_query_orientation.orientation}"
 
 
 @pytest.mark.search
