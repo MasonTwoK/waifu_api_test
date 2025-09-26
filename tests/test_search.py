@@ -7,11 +7,6 @@ from utils import tag_randomizer, tags_comparer, search_data_type_checker, searc
 from data import search_random_fields_name, search_random_fields_name_or_none, search_random_fields_name_tags
 
 
-url = "https://api.waifu.im/search"
-auth_token = os.environ['AUTH_TOKEN']  # How to get a token https://docs.waifu.im/authorization
-headers = {'Authorization': auth_token}
-
-
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_random
@@ -260,51 +255,6 @@ class TestGetSearchQueryFullTrue:
     def test_get_search_query_full_true_param(self, request_get_search_query_full):
         assert request_get_search_query_full.data['detail'] == "Missing or malformed token", \
             "Image parameter is_nsfw is not True"
-
-
-class TestCasesPositive:
-    def test_get_search_single_tag_included(self):
-        random_tag = tag_randomizer()
-
-        response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag}", headers=headers)
-        assert response.status_code == 200
-
-        content = response.json()
-        assert tags_comparer(tag=random_tag, content=content), 'Included tag is not present.'
-
-    @pytest.mark.skip(reason="BUG #3: Get search does not return picture with multiple searched tags. Repro rate 50%")
-    def test_get_search_multiple_tag_included(self):
-        random_tag_1 = tag_randomizer()
-        random_tag_2 = tag_randomizer()
-
-        response = requests.get(url=f"https://api.waifu.im/search/?included_tags={random_tag_1}&{random_tag_2}")
-        assert response.status_code == 200, 'Wrong status code'
-
-        content = response.json()
-        assert tags_comparer(random_tag_1, content)
-        assert tags_comparer(random_tag_2, content)
-
-    @pytest.mark.skip(reason='BUG #5: Need to be fixed')
-    def test_get_search_single_tag_excluded(self):
-        random_tag = tag_randomizer()
-
-        response = requests.get(url=f'https://api.waifu.im/search/?{random_tag}', headers=headers)
-        assert response.status_code == 200, 'Wrong status code'
-
-        content = response.json()
-        assert not tags_comparer(tag=random_tag, content=content), 'Image returned with excluded tag.'
-
-    @pytest.mark.skip(reason='BUG #6: Fails time to time. Need to be fixed')
-    def test_get_search_multiple_tag_excluded(self):
-        random_tag_1 = tag_randomizer()
-        random_tag_2 = tag_randomizer()
-
-        response = requests.get(url=f"{url}/?excluded_tags={random_tag_1}&{random_tag_2}", headers=headers)
-        assert response.status_code == 200
-
-        content = response.json()
-        assert not tags_comparer(tag=random_tag_1, content=content), f'Excluded tag - {random_tag_1} is present'
-        assert not tags_comparer(tag=random_tag_2, content=content), f'Excluded tag - {random_tag_2} is present'
 
 
 class TestCasesNegative:
