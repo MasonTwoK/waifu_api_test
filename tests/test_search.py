@@ -113,6 +113,16 @@ class TestGetSearchQueryExcludedTags:
             f"{request_get_search_query_excluded_tags.tag_name} is present in response"
 
 
+class TestGetSearchQueryIncludeFiles:
+    def test_get_search_query_included_files_status_code(self, request_get_search_query_included_files):
+        assert request_get_search_query_included_files.status_code == 200, 'Status code is not 200'
+
+    def test_get_search_query_included_files_body(self, request_get_search_query_included_files):
+        assert (request_get_search_query_included_files.data['images'][0]['image_id'] ==
+                request_get_search_query_included_files.file_id), \
+            'File id is not request_get_search_query_included_files.file_id'
+
+
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_gif

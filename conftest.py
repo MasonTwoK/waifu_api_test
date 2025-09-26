@@ -2,7 +2,7 @@ import pytest
 import requests
 import os
 from dotenv import load_dotenv
-from utils import query_bool_param_provider
+from utils import query_bool_param_provider, search_image_id_provider
 from data import full_info_tag_names, search_excluded_tags
 
 load_dotenv()
@@ -68,6 +68,19 @@ def request_get_search_query_excluded_tags(request):
     request.data = response.json()
 
     request.tag_name = tag_name
+
+    yield request
+
+
+@pytest.fixture(scope="class")
+def request_get_search_query_included_files(request):
+    file_id = search_image_id_provider()
+    response = requests.get(url=f"https://api.waifu.im/search?included_files={file_id}", headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+
+    request.file_id = file_id
 
     yield request
 

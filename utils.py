@@ -138,3 +138,10 @@ def search_orientation_provider(response_body):
         return ['PORTRAIT', 'LANDSCAPE', 'RANDOM']
     else:
         return 0
+
+
+def search_image_id_provider():
+    response = requests.get(url=f'https://api.waifu.im/search')
+    image_id = response.json()['images'][0]['image_id']
+
+    return image_id
