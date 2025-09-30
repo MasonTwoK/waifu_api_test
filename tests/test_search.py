@@ -214,6 +214,26 @@ class TestGetSearchQueryGifFalse:
 
 @pytest.mark.search
 @pytest.mark.positive
+@pytest.mark.search_query_order_by
+class TestGetSearchQueryOrderBy:
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_order_by
+    @pytest.mark.status_code
+    def test_get_search_order_by_status_code(self, request_get_search_order_by):
+        assert request_get_search_order_by.status_code == 200, "Status code is not 200"
+
+    @pytest.mark.skip(reason="TBD")
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_order_by
+    @pytest.mark.response_body
+    def test_get_search_order_by_body(self, request_get_search_order_by):
+        assert False
+
+
+@pytest.mark.search
+@pytest.mark.positive
 @pytest.mark.search_query_gif
 @pytest.mark.query_param('True')
 class TestGetSearchQueryGifTrue:

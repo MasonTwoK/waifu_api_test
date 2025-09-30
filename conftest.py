@@ -122,6 +122,19 @@ def request_get_search_query_gif(request):
     yield request
 
 
+@pytest.fixture(scope="class", params=['FAVORITES', 'UPLOADED_AT', 'RANDOM'])
+def request_get_search_order_by(request):
+    order_by = request.param
+    response = requests.get(url=f'https://api.waifu.im/search?order_by={order_by}', headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+
+    request.order_by = order_by
+
+    yield request
+
+
 @pytest.fixture()
 def request_get_search_query_is_nsfw(request):
     nsfw = request.node.get_closest_marker('query_param').args[0]
