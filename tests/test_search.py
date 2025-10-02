@@ -344,6 +344,27 @@ class TestGetSearchQueryWidth:
              f"is not {request_get_search_query_width.operator}{request_get_search_query_width.size}")
 
 
+@pytest.mark.search
+@pytest.mark.positive
+@pytest.mark.search_query_height
+class TestGetSearchQueryHeight:
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_height
+    @pytest.mark.status_code
+    def test_get_search_query_height_status_code(self, request_get_search_query_height):
+        assert request_get_search_query_height.status_code == 200, "Status code is not 200"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_height
+    @pytest.mark.response_body
+    def test_get_search_query_height_response_body(self, request_get_search_query_height):
+        response = request_get_search_query_height
+        assert search_side_size_check(response.data, response.operator, response.size, 'height') is True, \
+            f"Width {response.data['images'][0]['height']} is not {response.operator}{response.size}"
+
+
 class TestCasesNegative:
     @pytest.mark.skip(reason="BUG #2: Request does not require Bearer token")
     def test_get_search_random_without_header(self):
