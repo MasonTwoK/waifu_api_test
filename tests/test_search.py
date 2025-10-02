@@ -3,7 +3,7 @@
 import pytest
 import requests
 from utils import (tag_randomizer, tags_comparer, search_data_type_checker, search_orientation_provider,
-                   search_side_size_check)
+                   search_size_param_check)
 from data import search_random_fields_name, search_random_fields_name_or_none, search_random_fields_name_tags
 
 
@@ -339,8 +339,8 @@ class TestGetSearchQueryWidth:
     @pytest.mark.search_query_width
     @pytest.mark.status_code
     def test_get_search_query_width_response_body(self, request_get_search_query_width):
-        assert search_side_size_check(request_get_search_query_width.data, request_get_search_query_width.operator,
-                                      request_get_search_query_width.size, 'width') is True, \
+        assert search_size_param_check(request_get_search_query_width.data, request_get_search_query_width.operator,
+                                       request_get_search_query_width.size, 'width') is True, \
             (f"Width {request_get_search_query_width.data['images'][0]['width']} "
              f"is not {request_get_search_query_width.operator}{request_get_search_query_width.size}")
 
@@ -362,8 +362,29 @@ class TestGetSearchQueryHeight:
     @pytest.mark.response_body
     def test_get_search_query_height_response_body(self, request_get_search_query_height):
         response = request_get_search_query_height
-        assert search_side_size_check(response.data, response.operator, response.size, 'height') is True, \
+        assert search_size_param_check(response.data, response.operator, response.size, 'height') is True, \
             f"Width {response.data['images'][0]['height']} is not {response.operator}{response.size}"
+
+
+@pytest.mark.search
+@pytest.mark.positive
+@pytest.mark.search_query_bite_size
+class TestGetSearchQueryBiteSize:
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_bite_size
+    @pytest.mark.status_code
+    def test_get_search_query_bite_size_status_code(self, request_get_search_query_bite_size):
+        assert request_get_search_query_bite_size.status_code == 200, "Status code is not 200"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_bite_size
+    @pytest.mark.response_body
+    def test_get_search_query_bite_size_response_body(self, request_get_search_query_bite_size):
+        response = request_get_search_query_bite_size
+        assert search_size_param_check(response.data, response.operator, response.size, 'byte_size') is True, \
+            f"Byte size {response.data['images'][0]['byte_size']} is not {response.operator}{response.size}"
 
 
 class TestCasesNegative:

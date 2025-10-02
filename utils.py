@@ -147,8 +147,8 @@ def search_image_id_provider():
     return image_id
 
 
-def search_side_size_check(data, operator, size, side):
-    value = data['images'][0][side]
+def search_size_param_check(data, operator, size, param):
+    value = data['images'][0][param]
     match operator:
         case '>':
             if value > size:

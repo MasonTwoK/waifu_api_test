@@ -236,5 +236,5 @@ search_query_size_operators = [
     pytest.param('>', marks=pytest.mark.xfail(reason="Bug: Operator doesn't work as expected. Repro: 50%")),
     pytest.param('!=', marks=pytest.mark.xfail(reason="Bug: Operator doesn't work as expected. Repro: 50%")),
     pytest.param('=', marks=pytest.mark.skip(reason="Bug: Issue of the documentation")),
-    pytest.param('==', marks=pytest.mark.xfail(reason="Bug: Operator fails for query parameter 'height'"))
+    pytest.param('==', marks=pytest.mark.xfail(reason="Bug: Operator fails for query 'height' & 'byte_size'"))
 ]

@@ -187,3 +187,17 @@ def request_get_search_query_height(request):
     request.size = size
 
     yield request
+
+
+@pytest.fixture(scope="class", params=search_query_size_operators)
+def request_get_search_query_bite_size(request):
+    size = 1000
+    operator = request.param
+    response = requests.get(url=f'https://api.waifu.im/search?bite_size{operator}{size}', headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+    request.size = size
+    request.operator = operator
+
+    yield request
