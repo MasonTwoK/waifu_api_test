@@ -2,7 +2,8 @@
 
 import pytest
 import requests
-from utils import tag_randomizer, tags_comparer, search_data_type_checker, search_orientation_provider
+from utils import (tag_randomizer, tags_comparer, search_data_type_checker, search_orientation_provider,
+                   search_side_size_check)
 from data import search_random_fields_name, search_random_fields_name_or_none, search_random_fields_name_tags
 
 
@@ -318,6 +319,27 @@ class TestGetSearchQueryFullTrue:
     def test_get_search_query_full_true_param(self, request_get_search_query_full):
         assert request_get_search_query_full.data['detail'] == "Missing or malformed token", \
             "Image parameter is_nsfw is not True"
+
+
+@pytest.mark.search
+@pytest.mark.positive
+@pytest.mark.search_query_width
+class TestGetSearchQueryWidth:
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_width
+    @pytest.mark.status_code
+    def test_get_search_query_width_status_code(self, request_get_search_query_width):
+        assert request_get_search_query_width.status_code == 200, "Status code is not 200"
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.search_query_width
+    @pytest.mark.status_code
+    def test_get_search_query_width_response_body(self, request_get_search_query_width):
+        assert search_side_size_check(request_get_search_query_width.data, request_get_search_query_width.operator,
+                                      request_get_search_query_width.size, 'width') is True
 
 
 class TestCasesNegative:

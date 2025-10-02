@@ -228,3 +228,13 @@ search_excluded_tags = ['ass', 'hentai', 'milf', 'oral', 'paizuri', 'ecchi', 'er
                         pytest.param('waifu', marks=pytest.mark.xfail(reason="No response without 'waifu' tag")),
                         'marin-kitagawa', 'mori-calliope', 'raiden-shogun', 'oppai', 'selfies',
                         'uniform', 'kamisato-ayaka']
+
+search_query_size_operators = [
+    pytest.param('<=', marks=pytest.mark.xfail(reason="Bug: Operator doesn't work as expected. Repro: 50%")),
+    pytest.param('>=', marks=pytest.mark.xfail(reason="Bug: Operator doesn't work as expected. Repro: 50%")),
+    pytest.param('<', marks=pytest.mark.xfail(reason="Bug: Operator doesn't work as expected. Repro: 50%")),
+    pytest.param('>', marks=pytest.mark.xfail(reason="Bug: Operator doesn't work as expected. Repro: 50%")),
+    pytest.param('!=', marks=pytest.mark.xfail(reason="Bug: Operator doesn't work as expected. Repro: 50%")),
+    pytest.param('=', marks=pytest.mark.xfail(reason="Bug: Issue of the documentation")),
+    '==',
+]

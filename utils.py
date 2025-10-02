@@ -145,3 +145,30 @@ def search_image_id_provider():
     image_id = response.json()['images'][0]['image_id']
 
     return image_id
+
+
+def search_side_size_check(data, operator, size, side):
+    value = data['images'][0][side]
+    match operator:
+        case '>':
+            if value > size:
+                return True
+        case '<':
+            if value < size:
+                return True
+        case '>=':
+            if value >= size:
+                return True
+        case '<=':
+            if value <= size:
+                return True
+        case '!=':
+            if value != size:
+                return True
+        case '==':
+            if value == size:
+                return True
+        case '=':
+            if value == size:
+                return True
+    return False

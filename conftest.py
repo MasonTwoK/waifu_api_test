@@ -3,7 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from utils import query_bool_param_provider, search_image_id_provider
-from data import full_info_tag_names, search_excluded_tags
+from data import full_info_tag_names, search_excluded_tags, search_query_size_operators
 
 load_dotenv()
 headers = {
@@ -98,15 +98,13 @@ def request_get_search_query_excluded_files(request):
     yield request
 
 
-@pytest.fixture(scope="class")
-def request_get_search_query_full(request):
-    full = query_bool_param_provider(request.node.get_closest_marker('query_param').args[0])
-    response = requests.get(url=f"https://api.waifu.im/search?full={full}", headers=headers)
+@pytest.fixture()
+def request_get_search_query_is_nsfw(request):
+    nsfw = request.node.get_closest_marker('query_param').args[0]
+    response = requests.get(url=f'https://api.waifu.im/search?is_nsfw={nsfw}', headers=headers)
 
     request.status_code = response.status_code
-    request.data = response.json()
     request.image = response.json()['images'][0]
-    request.image_tag_info = response.json()['images'][0]['tags'][0]
 
     yield request
 
@@ -135,17 +133,6 @@ def request_get_search_order_by(request):
     yield request
 
 
-@pytest.fixture()
-def request_get_search_query_is_nsfw(request):
-    nsfw = request.node.get_closest_marker('query_param').args[0]
-    response = requests.get(url=f'https://api.waifu.im/search?is_nsfw={nsfw}', headers=headers)
-
-    request.status_code = response.status_code
-    request.image = response.json()['images'][0]
-
-    yield request
-
-
 @pytest.fixture(scope="class", params=['PORTRAIT', 'LANDSCAPE', 'RANDOM'])
 def request_get_search_query_orientation(request):
     orientation = request.param
@@ -155,5 +142,33 @@ def request_get_search_query_orientation(request):
     request.data = response.json()
 
     request.orientation = orientation
+
+    yield request
+
+
+@pytest.fixture(scope="class")
+def request_get_search_query_full(request):
+    full = query_bool_param_provider(request.node.get_closest_marker('query_param').args[0])
+    response = requests.get(url=f"https://api.waifu.im/search?full={full}", headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+    request.image = response.json()['images'][0]
+    request.image_tag_info = response.json()['images'][0]['tags'][0]
+
+    yield request
+
+
+@pytest.fixture(scope="class", params=search_query_size_operators)
+def request_get_search_query_width(request):
+    operator = request.param
+    size = 1000
+    response = requests.get(url=f'https://api.waifu.im/search?width{operator}{size}', headers=headers)
+
+    request.status_code = response.status_code
+    request.data = response.json()
+
+    request.operator = operator
+    request.size = size
 
     yield request
