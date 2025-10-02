@@ -321,6 +321,7 @@ class TestGetSearchQueryFullTrue:
             "Image parameter is_nsfw is not True"
 
 
+# TODO: Need to check boundary values of size for each operators
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_width
