@@ -339,7 +339,9 @@ class TestGetSearchQueryWidth:
     @pytest.mark.status_code
     def test_get_search_query_width_response_body(self, request_get_search_query_width):
         assert search_side_size_check(request_get_search_query_width.data, request_get_search_query_width.operator,
-                                      request_get_search_query_width.size, 'width') is True
+                                      request_get_search_query_width.size, 'width') is True, \
+            (f"Width {request_get_search_query_width.data['images'][0]['width']} "
+             f"is not {request_get_search_query_width.operator}{request_get_search_query_width.size}")
 
 
 class TestCasesNegative:
