@@ -89,9 +89,9 @@ class TestGetSearchQueryIncludedTags:
     @pytest.mark.positive
     @pytest.mark.response_body
     def test_get_search_query_included_tags_body(self, request_get_search_query_included_tags):
-        assert tags_comparer(request_get_search_query_included_tags.tag_name,
-                             request_get_search_query_included_tags.data), \
-            f'Tag {request_get_search_query_included_tags.tag_name} is not present for image'
+        response = request_get_search_query_included_tags
+        assert tags_comparer(response.tag_name, response.data) is True, \
+            f'Tag {response.tag_name} is not present for image'
 
 
 @pytest.mark.search
@@ -130,9 +130,8 @@ class TestGetSearchQueryIncludedFiles:
     @pytest.mark.search_query_included_files
     @pytest.mark.response_body
     def test_get_search_query_included_files_body(self, request_get_search_query_included_files):
-        assert (request_get_search_query_included_files.data['images'][0]['image_id'] ==
-                request_get_search_query_included_files.file_id), \
-            f'File id is not {request_get_search_query_included_files.file_id}'
+        response = request_get_search_query_included_files
+        assert response.data['images'][0]['image_id'] == response.file_id, f'File id is not {response.file_id}'
 
 
 @pytest.mark.search
@@ -151,9 +150,8 @@ class TestGetSearchQueryExcludeFiles:
     @pytest.mark.search_query_excluded_files
     @pytest.mark.response_body
     def test_get_search_query_exclude_files_body(self, request_get_search_query_excluded_files):
-        assert (request_get_search_query_excluded_files.data['images'][0]['image_id'] !=
-                request_get_search_query_excluded_files.file_id), \
-            f'File id is {request_get_search_query_excluded_files.file_id}'
+        response = request_get_search_query_excluded_files
+        assert response.data['images'][0]['image_id'] != response.file_id, f'File id is {response.file_id}'
 
 
 # TODO: Can be optimized with replace main logic to utils.py
@@ -268,9 +266,9 @@ class TestGetSearchQueryOrientation:
     @pytest.mark.search_query_orientation
     @pytest.mark.response_body
     def test_get_search_query_orientation_body(self, request_get_search_query_orientation):
-        assert request_get_search_query_orientation.orientation in search_orientation_provider(
-            request_get_search_query_orientation.data), \
-            f"Picture is not {request_get_search_query_orientation.orientation}"
+        response = request_get_search_query_orientation
+        assert response.orientation in search_orientation_provider(response.data), \
+            f"Picture is not {response.orientation}"
 
 
 @pytest.mark.search
@@ -339,10 +337,9 @@ class TestGetSearchQueryWidth:
     @pytest.mark.search_query_width
     @pytest.mark.status_code
     def test_get_search_query_width_response_body(self, request_get_search_query_width):
-        assert search_size_param_check(request_get_search_query_width.data, request_get_search_query_width.operator,
-                                       request_get_search_query_width.size, 'width') is True, \
-            (f"Width {request_get_search_query_width.data['images'][0]['width']} "
-             f"is not {request_get_search_query_width.operator}{request_get_search_query_width.size}")
+        response = request_get_search_query_width
+        assert search_size_param_check(response.data, response.operator, response.size, 'width') is True, \
+            f"Width {response.data['images'][0]['width']} is not {response.operator}{response.size}"
 
 
 @pytest.mark.search
