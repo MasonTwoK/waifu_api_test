@@ -215,6 +215,24 @@ class TestGetSearchQueryGifFalse:
 
 @pytest.mark.search
 @pytest.mark.positive
+@pytest.mark.search_query_gif
+@pytest.mark.query_param('True')
+class TestGetSearchQueryGifTrue:
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.status_code
+    def test_search_gif_true_status_code(self, request_get_search_query_gif):
+        assert request_get_search_query_gif.status_code == 200, 'Status code is not 200'
+
+    @pytest.mark.search
+    @pytest.mark.positive
+    @pytest.mark.response_body
+    def test_search_query_gif_true_param(self, request_get_search_query_gif):
+        assert request_get_search_query_gif.image_extension == '.gif', "Image extension is not equal .gif"
+
+
+@pytest.mark.search
+@pytest.mark.positive
 @pytest.mark.search_query_order_by
 class TestGetSearchQueryOrderBy:
     @pytest.mark.search
@@ -231,24 +249,6 @@ class TestGetSearchQueryOrderBy:
     @pytest.mark.response_body
     def test_get_search_order_by_body(self, request_get_search_order_by):
         assert False
-
-
-@pytest.mark.search
-@pytest.mark.positive
-@pytest.mark.search_query_gif
-@pytest.mark.query_param('True')
-class TestGetSearchQueryGifTrue:
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.status_code
-    def test_search_gif_true_status_code(self, request_get_search_query_gif):
-        assert request_get_search_query_gif.status_code == 200, 'Status code is not 200'
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.response_body
-    def test_search_query_gif_true_param(self, request_get_search_query_gif):
-        assert request_get_search_query_gif.image_extension == '.gif', "Image extension is not equal .gif"
 
 
 @pytest.mark.search
