@@ -154,13 +154,10 @@ class TestGetSearchQueryExcludeFiles:
         assert response.data['images'][0]['image_id'] != response.file_id, f'File id is {response.file_id}'
 
 
-# TODO: Can be optimized with replace main logic to utils.py
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_is_nsfw
-@pytest.mark.query_param('false')
-class TestGetSearchQueryIsNsfwFalse:
-
+class TestGetSearchQueryIsNsfw:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
@@ -171,26 +168,9 @@ class TestGetSearchQueryIsNsfwFalse:
     @pytest.mark.positive
     @pytest.mark.response_body
     def test_get_search_is_nsfw_true(self, request_get_search_query_is_nsfw):
-        assert request_get_search_query_is_nsfw.image['is_nsfw'] is False, 'is_nsfw parameter is not False'
-
-
-@pytest.mark.search
-@pytest.mark.positive
-@pytest.mark.search_query_is_nsfw
-@pytest.mark.query_param('true')
-class TestGetSearchQueryIsNsfwTrue:
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.status_code
-    def test_get_search_is_nsfw_true_status_code(self, request_get_search_query_is_nsfw):
-        assert request_get_search_query_is_nsfw.status_code == 200, 'Status code is not 200'
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.response_body
-    def test_get_search_is_nsfw_true(self, request_get_search_query_is_nsfw):
-        assert request_get_search_query_is_nsfw.image['is_nsfw'] is True, 'is_nsfw parameter is not True'
+        response = request_get_search_query_is_nsfw.data
+        assert response['images'][0]['is_nsfw'] == request_get_search_query_is_nsfw.nsfw_state, \
+            f'is_nsfw parameter {response['images'][0]['is_nsfw']} is not {request_get_search_query_is_nsfw.nsfw_state}'
 
 
 @pytest.mark.search

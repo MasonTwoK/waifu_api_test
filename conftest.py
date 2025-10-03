@@ -98,13 +98,15 @@ def request_get_search_query_excluded_files(request):
     yield request
 
 
-@pytest.fixture()
+@pytest.fixture(scope="class", params=[True, False])
 def request_get_search_query_is_nsfw(request):
-    nsfw = request.node.get_closest_marker('query_param').args[0]
+    nsfw = request.param
     response = requests.get(url=f'https://api.waifu.im/search?is_nsfw={nsfw}', headers=headers)
 
     request.status_code = response.status_code
-    request.image = response.json()['images'][0]
+    request.data = response.json()
+
+    request.nsfw_state = nsfw
 
     yield request
 
