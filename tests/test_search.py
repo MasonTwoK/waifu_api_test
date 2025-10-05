@@ -325,6 +325,7 @@ class TestGetSearchQueryWidth:
             f"Width {response.data['images'][0]['width']} is not {response.operator}{response.size}"
 
 
+# TODO: Need to check boundary values of size for each operators for all "size"
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_height
@@ -349,6 +350,7 @@ class TestGetSearchQueryHeight:
             f"Width {response.data['images'][0]['height']} is not {response.operator}{response.size}"
 
 
+# TODO: Need to check boundary values of size for each operators for all "size"
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_bite_size
