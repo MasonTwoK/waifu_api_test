@@ -3,7 +3,7 @@
 import pytest
 import requests
 from utils import (tag_randomizer, tags_comparer, search_data_type_checker, search_orientation_provider,
-                   search_size_param_check)
+                   search_size_param_check, search_gif_param_checker)
 from data import search_random_fields_name, search_random_fields_name_or_none, search_random_fields_name_tags
 
 
@@ -176,37 +176,19 @@ class TestGetSearchQueryIsNsfw:
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_gif
-@pytest.mark.query_param('False')
-class TestGetSearchQueryGifFalse:
+class TestGetSearchQueryGif:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_search_query_gif_false_status_code(self, request_get_search_query_gif):
+    def test_search_query_gif_status_code(self, request_get_search_query_gif):
         assert request_get_search_query_gif.status_code == 200, "Status code is not 200"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_search_query_gif_false_param(self, request_get_search_query_gif):
-        assert request_get_search_query_gif.image_extension != '.gif', "Extension parameter is .gif"
-
-
-@pytest.mark.search
-@pytest.mark.positive
-@pytest.mark.search_query_gif
-@pytest.mark.query_param('True')
-class TestGetSearchQueryGifTrue:
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.status_code
-    def test_search_gif_true_status_code(self, request_get_search_query_gif):
-        assert request_get_search_query_gif.status_code == 200, 'Status code is not 200'
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.response_body
-    def test_search_query_gif_true_param(self, request_get_search_query_gif):
-        assert request_get_search_query_gif.image_extension == '.gif', "Image extension is not equal .gif"
+    def test_search_query_gif_param(self, request_get_search_query_gif):
+        assert search_gif_param_checker(request_get_search_query_gif.data) == request_get_search_query_gif.gif_state, \
+            f".gif state for extension parameter is not {request_get_search_query_gif.gif_state}"
 
 
 @pytest.mark.search

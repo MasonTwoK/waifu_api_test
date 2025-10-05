@@ -111,13 +111,15 @@ def request_get_search_query_is_nsfw(request):
     yield request
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="class", params=[True, False])
 def request_get_search_query_gif(request):
-    gif = query_bool_param_provider(request.node.get_closest_marker('query_param').args[0])
+    gif = request.param
     response = requests.get(url=f'https://api.waifu.im/search?gif={gif}', headers=headers)
 
     request.status_code = response.status_code
-    request.image_extension = response.json()['images'][0]['extension']
+    request.data = response.json()
+
+    request.gif_state = gif
 
     yield request
 

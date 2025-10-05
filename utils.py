@@ -172,3 +172,10 @@ def search_size_param_check(data, operator, size, param):
             if value == size:
                 return True
     return False
+
+
+def search_gif_param_checker(data):
+    if data['images'][0]['extension'] == '.gif':
+        return True
+    else:
+        return False
