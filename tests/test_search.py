@@ -299,15 +299,17 @@ class TestGetSearchQueryFullTrue:
             "Image parameter is_nsfw is not True"
 
 
-# TODO: Need to check boundary values of size for each operators
+# TODO: Need to check boundary values of size for each operators for all "size"
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_width
+@pytest.mark.search_query_size_group
 class TestGetSearchQueryWidth:
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.search_query_width
+    @pytest.mark.search_query_size_group
     @pytest.mark.status_code
     def test_get_search_query_width_status_code(self, request_get_search_query_width):
         assert request_get_search_query_width.status_code == 200, "Status code is not 200"
@@ -315,6 +317,7 @@ class TestGetSearchQueryWidth:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.search_query_width
+    @pytest.mark.search_query_size_group
     @pytest.mark.status_code
     def test_get_search_query_width_response_body(self, request_get_search_query_width):
         response = request_get_search_query_width
@@ -325,10 +328,12 @@ class TestGetSearchQueryWidth:
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_height
+@pytest.mark.search_query_size_group
 class TestGetSearchQueryHeight:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.search_query_height
+    @pytest.mark.search_query_size_group
     @pytest.mark.status_code
     def test_get_search_query_height_status_code(self, request_get_search_query_height):
         assert request_get_search_query_height.status_code == 200, "Status code is not 200"
@@ -336,6 +341,7 @@ class TestGetSearchQueryHeight:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.search_query_height
+    @pytest.mark.search_query_size_group
     @pytest.mark.response_body
     def test_get_search_query_height_response_body(self, request_get_search_query_height):
         response = request_get_search_query_height
@@ -346,10 +352,12 @@ class TestGetSearchQueryHeight:
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_bite_size
+@pytest.mark.search_query_size_group
 class TestGetSearchQueryBiteSize:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.search_query_bite_size
+    @pytest.mark.search_query_size_group
     @pytest.mark.status_code
     def test_get_search_query_bite_size_status_code(self, request_get_search_query_bite_size):
         assert request_get_search_query_bite_size.status_code == 200, "Status code is not 200"
@@ -357,6 +365,7 @@ class TestGetSearchQueryBiteSize:
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.search_query_bite_size
+    @pytest.mark.search_query_size_group
     @pytest.mark.response_body
     def test_get_search_query_bite_size_response_body(self, request_get_search_query_bite_size):
         response = request_get_search_query_bite_size
