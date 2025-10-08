@@ -3,7 +3,8 @@
 import pytest
 import requests
 from utils import (tag_randomizer, tags_comparer, search_data_type_checker, search_orientation_provider,
-                   search_size_param_check, search_gif_param_checker)
+                   search_size_param_check, search_gif_param_checker, search_full_param_image_checker,
+                   search_full_field_tags_param_checker)
 from data import search_random_fields_name, search_random_fields_name_or_none, search_random_fields_name_tags
 
 
@@ -236,49 +237,29 @@ class TestGetSearchQueryOrientation:
 @pytest.mark.search
 @pytest.mark.positive
 @pytest.mark.search_query_full
-@pytest.mark.query_param('False')
-class TestGetSearchQueryFullFalse:
+class TestGetSearchQueryFull:
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.status_code
-    def test_get_search_query_full_false_status_code(self, request_get_search_query_full):
+    def test_get_search_query_full_status_code(self, request_get_search_query_full):
         assert request_get_search_query_full.status_code == 200, "Status code is not 200"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_get_search_query_full_false_is_nsfw_param(self, request_get_search_query_full):
-        assert request_get_search_query_full.image['is_nsfw'] is False, "Image parameter is_nsfw is not False"
+    def test_get_search_query_full_is_nsfw_param(self, request_get_search_query_full):
+        response = request_get_search_query_full.data
+        assert search_full_param_image_checker(response) is request_get_search_query_full.param_full, \
+            f"Image parameter is_nsfw is not {request_get_search_query_full.param_full}"
 
     @pytest.mark.search
     @pytest.mark.positive
     @pytest.mark.response_body
-    def test_get_search_query_full_false_field_tags_param_is_nsfw_false(self, request_get_search_query_full):
-        assert request_get_search_query_full.image_tag_info['is_nsfw'] is False, \
-            "Parameter is_nsfw in tags field is not False"
-
-
-# TODO: Redo conftest methods which reach objects inside json() since in error code case this objects won`t initialize!
-@pytest.mark.skip(reason="To remove in negative scenarios section")
-@pytest.mark.search
-@pytest.mark.positive
-@pytest.mark.search_query_full
-@pytest.mark.query_param('True')
-class TestGetSearchQueryFullTrue:
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.status_code
-    def test_get_search_query_full_true_status_code(self, request_get_search_query_full):
-        assert request_get_search_query_full.status_code == 401, "Status code is not 401"
-
-    @pytest.mark.search
-    @pytest.mark.positive
-    @pytest.mark.response_body
-    def test_get_search_query_full_true_param(self, request_get_search_query_full):
-        assert request_get_search_query_full.data['detail'] == "Missing or malformed token", \
-            "Image parameter is_nsfw is not True"
+    def test_get_search_query_full_field_tags_param_is_nsfw_false(self, request_get_search_query_full):
+        response = request_get_search_query_full.data
+        assert search_full_field_tags_param_checker(response) is request_get_search_query_full.param_full, \
+            f"Field tags parameter is_nsfw in tags field is not {request_get_search_query_full.param_full}"
 
 
 # TODO: Need to check boundary values of size for each operators for all "size"

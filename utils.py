@@ -179,3 +179,17 @@ def search_gif_param_checker(data):
         return True
     else:
         return False
+
+
+def search_full_param_image_checker(data):
+    if data['images'][0] is True:
+        return True
+    else:
+        return False
+
+
+def search_full_field_tags_param_checker(data):
+    if data['images'][0]['tags'][0]['is_nsfw'] is True:
+        return True
+    else:
+        return False

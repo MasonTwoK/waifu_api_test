@@ -150,15 +150,15 @@ def request_get_search_query_orientation(request):
     yield request
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="class", params=[pytest.param(True, marks=pytest.mark.xfail(reason="Admins only")), False])
 def request_get_search_query_full(request):
-    full = query_bool_param_provider(request.node.get_closest_marker('query_param').args[0])
+    full = request.param
     response = requests.get(url=f"https://api.waifu.im/search?full={full}", headers=headers)
 
     request.status_code = response.status_code
     request.data = response.json()
-    request.image = response.json()['images'][0]
-    request.image_tag_info = response.json()['images'][0]['tags'][0]
+
+    request.param_full = full
 
     yield request
 
