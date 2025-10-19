@@ -36,9 +36,25 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirments.txt
 ```
 
+## Environments
+- Some API calls require authorization token `AUTH_TOKEN` to be applied. To get it please follow this [Guide of Generating a Token](https://docs.waifu.im/authentication#generating-a-token).
+- Guide of getting [Discord ID](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID#h_01HRSTXPS5H5D7JBY2QKKPVKNA)
+
+### To setup environment 
+1. Create file `.env` in project folder
+2. Add generated `AUTH_TOKEN` & `DISCORD_ID`
+3. File should have similar structure:
+```python
+AUTH_TOKEN=xxxxxxxxxxxxxxxxxx
+DISCORD_ID=xxxxxxxxxxxxxxxxxx
+```
+### ⚠️403 errors caused by [Cloudflare GeoBlocking](http://docs.waifu.im/cloudflare-geoblocking)
+To avoid such issues please use VPN connection (preferably Germany)
+
 ## 🔧 Tech Stack
 - Python
 - Pytest
+- Docker
 
 ### 📄 License
 This project is open-source and available under the MIT License.
