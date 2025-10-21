@@ -32,7 +32,7 @@ Main idea of this project is to obtain solid understanding of next topics:
 git clone https://github.com/MasonTwoK/waifu_api_test.git
 cd waifu_api_test
 python -m venv env
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirments.txt
 ```
 ### To apply test launch 🚀 use next command:
